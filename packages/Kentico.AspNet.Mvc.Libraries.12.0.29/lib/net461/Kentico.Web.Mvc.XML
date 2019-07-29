@@ -1,0 +1,1196 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Kentico.Web.Mvc</name>
+    </assembly>
+    <members>
+        <member name="T:Kentico.Web.Mvc.ApplicationBootstrapper">
+            <summary>
+            Initializes Kentico integration with ASP.NET MVC. This class is for internal use only.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.ApplicationBootstrapper.Run">
+            <summary>
+            Runs the bootstrapper process.
+            </summary>
+        </member>
+        <member name="T:Kentico.Web.Mvc.ApplicationBuilder">
+            <summary>
+            Configures the request pipeline using Kentico ASP.NET MVC integration features.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.ApplicationBuilder.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Kentico.Web.Mvc.ApplicationBuilder"/> class.
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.ApplicationBuilder.Current">
+            <summary>
+            Gets the current application builder.
+            </summary>
+        </member>
+        <member name="T:Kentico.Web.Mvc.ApplicationBuilderExtensions">
+            <summary>
+            Provides extension methods related to Kentico ASP.NET MVC integration features.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.ApplicationBuilderExtensions.UseDataAnnotationsLocalization(Kentico.Web.Mvc.IApplicationBuilder)">
+            <summary>
+            Enables localization of ASP.NET model meta-data based on data annotation attributes.
+            Display names or validation results declared with data annotation attributes can contain keys of Kentico resource strings that will be resolved automatically using Kentico localization API.
+            The localization uses a custom model metadata provider based on data annotations and is therefore not compatible with other providers or their customizations.
+            </summary>
+            <param name="builder">The application builder.</param>
+        </member>
+        <member name="M:Kentico.Web.Mvc.ApplicationBuilderExtensions.UseResourceSharingWithAdministration(Kentico.Web.Mvc.IApplicationBuilder)">
+            <summary>
+            When request is sent from administration domain of the site, 
+            adds header Access-Control-Allow-Origin into response to enable cross origin resource sharing (CORS) with the administration.
+            </summary>
+            <param name="builder">The application builder.</param>
+        </member>
+        <member name="T:Kentico.Web.Mvc.AntiForgeryExtensions">
+            <summary>
+            Extension methods for AntiForgery support for pages with output cache.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.AntiForgeryExtensions.AntiForgeryToken(Kentico.Web.Mvc.ExtensionPoint{System.Web.Mvc.HtmlHelper})">
+            <summary>
+            Generates a hidden form field (anti-forgery token) that is validated when the form is submitted.
+            </summary>
+            <param name="htmlHelper"><see cref="T:System.Web.Mvc.HtmlHelper"/> instance.</param>
+            <remarks>Ensures that AntiForgery token is correctly generated on pages with output cache.</remarks>
+        </member>
+        <member name="T:Kentico.Web.Mvc.AntiForgeryHelper">
+            <summary>
+            Helper class used for AntiForgeryToken used on pages with output cache.
+            </summary>
+            <remarks>
+            <para>
+            AntiForgery token for pages with output cache is ensured by combination of <see cref="P:System.Web.HttpResponse.Filter"/> behavior and 
+            custom call of <see cref="M:System.Web.Helpers.AntiForgery.GetHtml"/> method within the response filtering. We can't use original method because the AntiForgery token
+            is generated once and used for all responses, it means that different users have different cookie but same token in response which leads to validation error on form submit.
+            Moreover, original method adds Set-Cookie into the headers so it's captured by output cache mechanism and output cache is not used on first request.
+            </para>
+            <para>
+            In case of not-cached response AntiForgery token in view is requested by <see cref="M:Kentico.Web.Mvc.AntiForgeryExtensions.AntiForgeryToken(Kentico.Web.Mvc.ExtensionPoint{System.Web.Mvc.HtmlHelper})"/> method instead of <see cref="M:System.Web.Mvc.HtmlHelper.AntiForgeryToken" />. 
+            This method renders <see cref="F:Kentico.Web.Mvc.AntiForgeryHelper.INPUT_PLACEHOLDER"/> into the markup and registers response filter with placeholder replacement logic. The logic replaces the placeholder in response output and registers
+            <see cref="M:Kentico.Web.Mvc.AntiForgeryHelper.ValidateCache(System.Web.HttpContext,System.Object,System.Web.HttpValidationStatus@)"/> as validation callback with rendered token value (for cached response replacement).
+            If AntiForgery cookie is not available the <see cref="M:System.Web.Helpers.AntiForgery.GetHtml"/> method sets the cookie but in this request pipeline stage the output cache is not disabled.
+            </para>
+            <para>
+            In case of cached response validation callback is initialized. Within the validation callback response filter is registered with AntiForgery token value replacement logic.
+            We don't need to replace placeholder because placeholder is not in cached response the first token is cached in response. 
+            The token value is available in validation callback data object so we just replace the token value within the response filter replacement logic.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Kentico.Web.Mvc.AntiForgeryHelper.#ctor(System.Web.HttpContextBase,Kentico.Web.Mvc.Internal.ResponseFilter,System.Func{System.Web.HtmlString})">
+            <summary>
+            Creates new instance of <see cref="T:Kentico.Web.Mvc.AntiForgeryHelper"/>.
+            </summary>
+            <param name="httpContext">Http context</param>
+            <param name="responseFilter">Response filter instance</param>
+            <param name="getHtml">Function for html token generator</param>
+        </member>
+        <member name="P:Kentico.Web.Mvc.AntiForgeryHelper.TokenReplacement">
+            <summary>
+            Cached antiforgery token value to be replaced for cached response
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.AntiForgeryHelper.Instance">
+            <summary>
+            Request specific instance.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.AntiForgeryHelper.EnsureResponeTokens(System.Boolean)">
+            <summary>
+            Ensures <see cref="T:Kentico.Web.Mvc.Internal.ResponseFilter"/> modification for initial or cached request.
+            </summary>
+            <param name="isCachedRequest">Indicates whether current request is initiated from cache.</param>
+        </member>
+        <member name="M:Kentico.Web.Mvc.AntiForgeryHelper.EnsureResponseTokensForInitialRequest(System.String)">
+            <summary>
+            Ensures response filter modification for initial (not cached) request.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.AntiForgeryHelper.EnsureResponseTokensForCachedRequest(System.String)">
+            <summary>
+            Ensures response filter modification for cached request.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.AntiForgeryHelper.GenerateTokenSafe(System.String@)">
+            <summary>
+            Generates antiforgery token value and hidden input markup.
+            </summary>
+            <param name="tokenHtml">Returns HTML code for hidden input with antiforgery token.</param>
+        </member>
+        <member name="M:Kentico.Web.Mvc.AntiForgeryHelper.ValidateCache(System.Web.HttpContext,System.Object,System.Web.HttpValidationStatus@)">
+            <summary>
+            Cache callback method used as response filter registrant for cached response
+            </summary>
+        </member>
+        <member name="T:Kentico.Web.Mvc.BrowserOutputCacheKey">
+            <summary>
+            Class used to generate cache item key for different browsers.
+            </summary>
+        </member>
+        <member name="T:Kentico.Web.Mvc.OutputCacheKeyOptionsExtensions">
+            <summary>
+            <see cref="T:Kentico.Web.Mvc.IOutputCacheKeyOptions"/> extension methods.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.OutputCacheKeyOptionsExtensions.VaryByUser(Kentico.Web.Mvc.IOutputCacheKeyOptions)">
+            <summary>
+            Ensures that output cache vary by user.
+            </summary>
+            <param name="options"><see cref="T:Kentico.Web.Mvc.IOutputCacheKeyOptions"/> object.</param>
+        </member>
+        <member name="M:Kentico.Web.Mvc.OutputCacheKeyOptionsExtensions.VaryByHost(Kentico.Web.Mvc.IOutputCacheKeyOptions)">
+            <summary>
+            Ensures that output cache vary by host name.
+            </summary>
+            <param name="options"><see cref="T:Kentico.Web.Mvc.IOutputCacheKeyOptions"/> object.</param>
+        </member>
+        <member name="M:Kentico.Web.Mvc.OutputCacheKeyOptionsExtensions.VaryBySite(Kentico.Web.Mvc.IOutputCacheKeyOptions)">
+            <summary>
+            Ensures that output cache vary by site name.
+            </summary>
+            <param name="options"><see cref="T:Kentico.Web.Mvc.IOutputCacheKeyOptions"/> object.</param>
+        </member>
+        <member name="M:Kentico.Web.Mvc.OutputCacheKeyOptionsExtensions.VaryByBrowser(Kentico.Web.Mvc.IOutputCacheKeyOptions)">
+            <summary>
+            Ensures that output cache vary by browser type.
+            </summary>
+            <param name="options"><see cref="T:Kentico.Web.Mvc.IOutputCacheKeyOptions"/> object.</param>
+        </member>
+        <member name="M:Kentico.Web.Mvc.OutputCacheKeyOptionsExtensions.VaryByCookieLevel(Kentico.Web.Mvc.IOutputCacheKeyOptions)">
+            <summary>
+            Ensures that output cache vary by cookie level.
+            </summary>
+            <param name="options"><see cref="T:Kentico.Web.Mvc.IOutputCacheKeyOptions"/> object.</param>
+        </member>
+        <member name="T:Kentico.Web.Mvc.SiteOutputCacheKey">
+            <summary>
+            Class used to generate cache item key for different sites.
+            </summary>
+        </member>
+        <member name="T:Kentico.Web.Mvc.CookieLevelCacheKey">
+            <summary>
+            Class used to generate cache item key for different cookie levels.
+            </summary>
+        </member>
+        <member name="T:Kentico.Web.Mvc.OutputCacheKeyHelper">
+            <summary>
+            Helps with creating a cache key to be used in output cache.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.OutputCacheKeyHelper.CreateOptions">
+            <summary>
+            Creates <see cref="T:Kentico.Web.Mvc.IOutputCacheKeyOptions"/> instance, used to set up cache dependencies.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.OutputCacheKeyHelper.GetVaryByCustomString(System.Web.HttpContext,System.String,Kentico.Web.Mvc.IOutputCacheKeyOptions)">
+            <summary>
+            Returns a cache key built from <paramref name="options"/>, <paramref name="context"/> and <paramref name="custom"/>.
+            </summary>
+            <param name="context">An <see cref="T:System.Web.HttpContext"/> object that contains information about the current Web request.</param>
+            <param name="custom">The custom string that specifies which cached response is used to respond to the current request.</param>
+            <param name="options">Options object with various vary by values.</param>
+        </member>
+        <member name="M:Kentico.Web.Mvc.OutputCacheKeyHelper.GetVaryByCustomStringInternal(System.Web.HttpContextBase,System.String,Kentico.Web.Mvc.IOutputCacheKeyOptions)">
+            <summary>
+            Returns a cache key built from <paramref name="options"/>, <paramref name="context"/> and <paramref name="custom"/>.
+            </summary>
+            <param name="context">An <see cref="T:System.Web.HttpContext"/> object that contains information about the current Web request.</param>
+            <param name="custom">The custom string that specifies which cached response is used to respond to the current request.</param>
+            <param name="options">Options object with various vary by values.</param>
+        </member>
+        <member name="M:Kentico.Web.Mvc.OutputCacheKeyHelper.CreateOptionsInternal">
+            <summary>
+            Creates <see cref="T:Kentico.Web.Mvc.IOutputCacheKeyOptions"/> instance, used to set up cache dependencies.
+            </summary>
+        </member>
+        <member name="T:Kentico.Web.Mvc.HostOutputCacheKey">
+            <summary>
+            Class used to generate cache item key for different hosts.
+            </summary>
+        </member>
+        <member name="T:Kentico.Web.Mvc.IOutputCacheKey">
+            <summary>
+            Output cache key definition.
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.IOutputCacheKey.Name">
+            <summary>
+            Defines a unique name for a cache key.
+            </summary>
+            <remarks>Name is used as a prefix for resulting cache key <see cref="M:Kentico.Web.Mvc.IOutputCacheKey.GetVaryByCustomString(System.Web.HttpContextBase,System.String)"/>.</remarks>
+        </member>
+        <member name="M:Kentico.Web.Mvc.IOutputCacheKey.GetVaryByCustomString(System.Web.HttpContextBase,System.String)">
+            <summary>
+            Returns cache key specific for the current cache item.
+            </summary>
+            <param name="context">An <see cref="T:System.Web.HttpContext"/> object that contains information about the current Web request.</param>
+            <param name="custom">The custom string that specifies which cached response is used to respond to the current request.</param>
+        </member>
+        <member name="T:Kentico.Web.Mvc.CorsContextFactory">
+            <summary>
+            Factory that provides <see cref="T:Kentico.Web.Mvc.ICorsRequestContext"/> and <see cref="T:Kentico.Web.Mvc.ICorsResponseContext"/>.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.CorsContextFactory.GetCorsRequestContext(CMS.Base.IHttpContext)">
+            <summary>
+            Gets <see cref="T:Kentico.Web.Mvc.ICorsRequestContext"/>.
+            </summary>
+            <param name="httpContext">Http context</param>
+            <returns>New instance of <see cref="T:Kentico.Web.Mvc.CorsRequestContext"/>.</returns>
+        </member>
+        <member name="M:Kentico.Web.Mvc.CorsContextFactory.GetCorsResponseContext(CMS.Base.IHttpContext)">
+            <summary>
+            Gets <see cref="T:Kentico.Web.Mvc.ICorsResponseContext"/>.
+            </summary>
+            <param name="httpContext">Http context</param>
+            <returns>New instance of <see cref="T:Kentico.Web.Mvc.CorsResponseContext"/>.</returns>
+        </member>
+        <member name="T:Kentico.Web.Mvc.CorsRequestContext">
+            <summary>
+            Provides access to CORS-related informations of the request.
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.CorsRequestContext.Origin">
+            <summary>
+            Gets the Origin header value.
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.CorsRequestContext.AccessControlRequestMethod">
+            <summary>
+            Gets the Access-Control-Request-Method header value.
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.CorsRequestContext.HttpMethod">
+            <summary>
+            Gets the request HTTP method.
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.CorsRequestContext.IsPreflight">
+            <summary>
+            Gets a value indicating whether this is a preflight request.
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.CorsRequestContext.IsCurrentSiteOrigin">
+            <summary>
+            Gets a value indicating if the requestHeaders origin domain is one of current site's domains. 
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.CorsRequestContext.#ctor(CMS.Base.IHttpContext)">
+            <summary>
+            Creates a new instance of <see cref="T:Kentico.Web.Mvc.CorsRequestContext"/>.
+            </summary>
+            <param name="httpContext">HTTP Context</param>
+            <exception cref="T:System.ArgumentNullException">Throws when <paramref name="httpContext"/> is <c>null</c>.</exception>
+        </member>
+        <member name="M:Kentico.Web.Mvc.CorsRequestContext.IsCurrentSiteOriginInternal(System.String)">
+            <summary>
+            Finds out if the <paramref name="requestOrigin"/> (URI) belongs to current site's administration
+            so the request origin can be considered as trusted.
+            </summary>
+            <param name="requestOrigin">URI of the request origin</param>
+            <returns>True, if the requestHeaders origin domain is one of current site's domains</returns>
+        </member>
+        <member name="T:Kentico.Web.Mvc.CorsResponseContext">
+            <summary>
+            Provides access to CORS-related informations of the response.
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.CorsResponseContext.HttpResponse">
+            <summary>
+            Gets HTTP-response information. 
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.CorsResponseContext.AllowOrigin">
+            <summary>
+            Gets or sets the Access-Control-Allow-Origin response header. 
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.CorsResponseContext.AllowMethods">
+            <summary>
+            Gets or sets the Access-Control-Allow-Methods response header values.
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.CorsResponseContext.AllowHeaders">
+            <summary>
+            Gets or sets the Access-Control-Allow-Headers response header values.
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.CorsResponseContext.AllowCredentials">
+            <summary>
+            Gets or sets the Access-Control-Allow-Credentials response header.
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.CorsResponseContext.MaxAge">
+            <summary>
+            Gets or sets the Access-Control-Max-Age response header.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.CorsResponseContext.#ctor(CMS.Base.IHttpContext)">
+            <summary>
+            Creates new instance of <see cref="T:Kentico.Web.Mvc.CorsResponseContext" />.
+            </summary>
+            <param name="httpContext">HTTP context</param>
+            <exception cref="T:System.ArgumentNullException">Throws when <paramref name="httpContext"/> is <c>null</c>.</exception>
+        </member>
+        <member name="M:Kentico.Web.Mvc.CorsResponseContext.EndResponse">
+            <summary>
+            Sets OK (200) status code, stops execution of the request
+            and sends all currently buffered output to the client.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.CorsResponseContext.SetOrReplaceHeader(System.String,System.Object)">
+            <summary>
+            Sets or replace response header determined by given <paramref name="headerName"/>.
+            </summary>
+            <param name="headerName">Header name</param>
+            <param name="headerValue">Header value</param>
+        </member>
+        <member name="T:Kentico.Web.Mvc.CorsConfiguration">
+            <summary>
+            Provides configuration for the <see cref="T:Kentico.Web.Mvc.KenticoCorsModule" />.
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.CorsConfiguration.AllowMethods">
+            <summary>
+            Specifies the method or methods allowed when accessing the resource in response to a preflight request.
+            </summary>
+            <remarks>
+            See <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Methods">
+            https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Methods</a> for more information.
+            </remarks>
+        </member>
+        <member name="P:Kentico.Web.Mvc.CorsConfiguration.AllowHeaders">
+            <summary>
+            Indicate which HTTP headers can be used during the actual request after a preflight request.
+            </summary>
+            <remarks>
+            See <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Headers">
+            https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Headers</a> for more information.
+            </remarks>
+        </member>
+        <member name="P:Kentico.Web.Mvc.CorsConfiguration.AllowCredentials">
+            <summary>
+            When set to <c>true</c> browsers will expose credentials (cookies, authorization headers or TLS client certificates) to frontend JavaScript code.
+            </summary>
+            <remarks>
+            See <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Credentials">
+            https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Credentials</a> for more information.
+            </remarks>
+        </member>
+        <member name="P:Kentico.Web.Mvc.CorsConfiguration.MaxAge">
+            <summary>
+            Indicates how long the results of a preflight request can be cached in seconds.
+            </summary>
+            <remarks>
+            See <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Max-Age">
+            https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Max-Age</a> for more information.
+            </remarks>
+        </member>
+        <member name="T:Kentico.Web.Mvc.CorsConstants">
+            <summary>
+            CORS-related constants.
+            </summary>
+        </member>
+        <member name="F:Kentico.Web.Mvc.CorsConstants.PREFLIGHT_HTTP_METHOD">
+            <summary>
+            The HTTP method for the CORS preflight request.
+            </summary>
+        </member>
+        <member name="F:Kentico.Web.Mvc.CorsConstants.ORIGIN">
+            <summary>
+            The Origin request header.
+            </summary>
+        </member>
+        <member name="F:Kentico.Web.Mvc.CorsConstants.ACCESS_CONTROL_REQUEST_METHOD">
+            <summary>
+            The Access-Control-Request-Method request header.
+            </summary>
+        </member>
+        <member name="F:Kentico.Web.Mvc.CorsConstants.ACCESS_CONTROL_ALLOW_ORIGIN">
+            <summary>
+            The Access-Control-Allow-Origin response header.
+            </summary>
+        </member>
+        <member name="F:Kentico.Web.Mvc.CorsConstants.ACCESS_CONTROL_ALLOW_HEADERS">
+            <summary>
+            The Access-Control-Allow-Headers response header.
+            </summary>
+        </member>
+        <member name="F:Kentico.Web.Mvc.CorsConstants.ACCESS_CONTROL_ALLOW_METHODS">
+            <summary>
+            The Access-Control-Allow-Methods response header.
+            </summary>
+        </member>
+        <member name="F:Kentico.Web.Mvc.CorsConstants.ACCESS_CONTROL_ALLOW_CREDENTIALS">
+            <summary>
+            The Access-Control-Allow-Credentials response header.
+            </summary>
+        </member>
+        <member name="F:Kentico.Web.Mvc.CorsConstants.ACCESS_CONTROL_MAX_AGE">
+            <summary>
+            The Access-Control-Max-Age response header.
+            </summary>
+        </member>
+        <member name="T:Kentico.Web.Mvc.ICorsRequestContext">
+            <summary>
+            Interface for <see cref="T:Kentico.Web.Mvc.CorsRequestContext"/>.
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.ICorsRequestContext.Origin">
+            <summary>
+            Gets the Origin header value.
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.ICorsRequestContext.AccessControlRequestMethod">
+            <summary>
+            Gets the Access-Control-Request-Method header value.
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.ICorsRequestContext.HttpMethod">
+            <summary>
+            Gets the request HTTP method.
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.ICorsRequestContext.IsPreflight">
+            <summary>
+            Gets a value indicating whether this is a preflight request.
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.ICorsRequestContext.IsCurrentSiteOrigin">
+            <summary>
+            Gets a value indicating if the requestHeaders origin domain is one of current site's domains. 
+            </summary>
+        </member>
+        <member name="T:Kentico.Web.Mvc.ICorsResponseContext">
+            <summary>
+            Interface for <see cref="T:Kentico.Web.Mvc.CorsResponseContext"/>.
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.ICorsResponseContext.AllowOrigin">
+            <summary>
+            Gets or sets the Access-Control-Allow-Origin response header. 
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.ICorsResponseContext.AllowMethods">
+            <summary>
+            Gets or sets the Access-Control-Allow-Methods response header values.
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.ICorsResponseContext.AllowHeaders">
+            <summary>
+            Gets or sets the Access-Control-Allow-Headers response header values.
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.ICorsResponseContext.AllowCredentials">
+            <summary>
+            Gets or sets the Access-Control-Allow-Credentials response header.
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.ICorsResponseContext.MaxAge">
+            <summary>
+            Gets or sets the Access-Control-Max-Age response header.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.ICorsResponseContext.EndResponse">
+            <summary>
+            Sets OK (200) status code, stops execution of the request
+            and sends all currently buffered output to the client.
+            </summary>
+        </member>
+        <member name="T:Kentico.Web.Mvc.KenticoCorsModule">
+            <summary>
+            Module enabling cross origin resource sharing (CORS) with domains bound to current site.
+            When request is sent from current site's domain, puts corresponding headers into response to enable CORS.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.KenticoCorsModule.Initialize(Kentico.Web.Mvc.CorsConfiguration)">
+            <summary>
+            Initializes a module and prepares it to handle requests.
+            </summary>
+            <exception cref="T:System.ArgumentNullException">Throws when <paramref name="corsConfiguration"/> is <c>null</c>.</exception>
+        </member>
+        <member name="M:Kentico.Web.Mvc.KenticoCorsModule.Begin_Execute(System.Object,System.EventArgs)">
+            <summary>
+            Occurs as the first event in the HTTP pipeline chain of execution when ASP.NET
+            responds to a request. 
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.KenticoCorsModule.HandlePreflightRequest(CMS.Base.IHttpContext,Kentico.Web.Mvc.CorsContextFactory)">
+            <summary>
+            Ends request and stops execution in case of the preflight request. 
+            </summary>
+            <param name="httpContext">HTTP context</param>
+            <param name="corsContextFactory">CorsContext Factory</param>
+            <exception cref="T:System.ArgumentNullException">Throws when <paramref name="httpContext"/> or <paramref name="corsContextFactory"/> is <c>null</c>.</exception>
+        </member>
+        <member name="M:Kentico.Web.Mvc.KenticoCorsModule.PreSendRequestHeaders_Execute(System.Object,System.EventArgs)">
+            <summary>
+            Executes just before ASP.NET sends HTTP headers to the client.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.KenticoCorsModule.SetHeaderToAllowCurrentSiteOrigin(CMS.Base.IHttpContext,Kentico.Web.Mvc.CorsContextFactory)">
+            <summary>
+            Sets corresponding response headers taking into account the origin and preflight.
+            </summary>
+            <param name="httpContext">HTTP context</param>
+            <param name="corsContextFactory">CorsContext Factory</param>
+            <exception cref="T:System.ArgumentNullException">Throws when<paramref name="httpContext"/> or <paramref name="corsContextFactory"/> is <c>null</c>.</exception>
+        </member>
+        <member name="T:Kentico.Web.Mvc.IModelMetadataModifier">
+            <summary>
+            Defines an interface for objects to customize model metadata when they are being created.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.IModelMetadataModifier.ModifyMetadata(System.Web.Mvc.ModelMetadata)">
+            <summary>
+            Allows to customize passed model metadata by object for which the metadata are being created.
+            </summary>
+            <param name="modelMetadata">Metadata to modify.</param>
+        </member>
+        <member name="T:Kentico.Web.Mvc.LocalizedCompareAttributeAdapter">
+            <summary>
+            Provides an adapter for the <see cref="T:System.ComponentModel.DataAnnotations.CompareAttribute"/> attribute that localizes error messages in validation errors and client validation rules.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizedCompareAttributeAdapter.#ctor(System.Web.Mvc.ModelMetadata,System.Web.Mvc.ControllerContext,System.ComponentModel.DataAnnotations.CompareAttribute)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Kentico.Web.Mvc.LocalizedCompareAttributeAdapter"/> class.
+            </summary>
+            <param name="metadata">The model metadata.</param>
+            <param name="context">The controller context.</param>
+            <param name="attribute">The <see cref="T:System.ComponentModel.DataAnnotations.CompareAttribute"/> attribute.</param>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizedCompareAttributeAdapter.Validate(System.Object)">
+            <summary>
+            Retrieves a collection of localized validation errors for the model and returns it.
+            </summary>
+            <param name="container">The container for the model.</param>
+            <returns>A collection of localized validation errors for the model, or an empty collection if no errors have occurred.</returns>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizedCompareAttributeAdapter.GetClientValidationRules">
+            <summary>
+            Retrieves a collection of localized client validation rules for the model and returns it.
+            </summary>
+            <returns>A collection of localized client validation rules for the model.</returns>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizedCompareAttributeAdapter.FormatPropertyForClientValidation(System.String)">
+            <summary>
+            Formats the property for client validation by prepending an asterisk (*) and a dot.
+            </summary>
+            <returns>The string "*." is prepended to the property.</returns>
+        </member>
+        <member name="T:Kentico.Web.Mvc.EmbeddedViewAssembly">
+            <summary>
+            Holds information about <see cref="T:Kentico.Web.Mvc.EmbeddedView"/>s in assembly.
+            </summary>
+        </member>
+        <member name="T:Kentico.Web.Mvc.EmbeddedViewAssemblyAttribute">
+            <summary>
+            Holds information about embedded views in assembly.
+            </summary>
+            <remarks>
+            This API supports the framework infrastructure and is not intended to be used directly from your code.
+            </remarks>
+        </member>
+        <member name="P:Kentico.Web.Mvc.EmbeddedViewAssemblyAttribute.ViewPaths">
+            <summary>
+            List of view paths
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.EmbeddedViewAssemblyAttribute.#ctor(System.String[])">
+            <summary>
+            Creates new instance of <see cref="T:Kentico.Web.Mvc.EmbeddedViewAssemblyAttribute"/>.
+            </summary>
+            <param name="viewPaths">View paths</param>
+        </member>
+        <member name="T:Kentico.Web.Mvc.EmbeddedViewBootstrapper">
+            <summary>
+            Ensures initialization of view engine used for embedded system views.
+            </summary>
+            <remarks>
+            This API supports the framework infrastructure and is not intended to be used directly from your code.
+            </remarks>
+        </member>
+        <member name="M:Kentico.Web.Mvc.EmbeddedViewBootstrapper.Register">
+            <summary>
+            Registers dynamic module with initialization routine.
+            </summary>
+            <remarks>
+            This API supports the framework infrastructure and is not intended to be used directly from your code.
+            </remarks>
+        </member>
+        <member name="T:Kentico.Web.Mvc.EmbeddedViewLoader">
+            <summary>
+            Loads mapping information from assembly about view path and view type.
+            </summary>
+        </member>
+        <member name="T:Kentico.Web.Mvc.EmbeddedViewMapping">
+            <summary>
+            Maps view relative path to view type
+            </summary>
+        </member>
+        <member name="T:Kentico.Web.Mvc.FeatureSet">
+            <summary>
+            Represents a set of features available for the current request.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.FeatureSet.SetFeature``1(``0)">
+            <summary>
+            Adds or replaces a feature of the specified type.
+            </summary>
+            <typeparam name="T">The type of the feature.</typeparam>
+            <param name="feature">The feature to add or replace.</param>
+        </member>
+        <member name="M:Kentico.Web.Mvc.FeatureSet.GetFeature``1">
+            <summary>
+            Returns a feature of the specified type.
+            </summary>
+            <typeparam name="T">The type of the feature.</typeparam>
+            <returns>A feature of the specified type, if available; otherwise, null.</returns>
+        </member>
+        <member name="M:Kentico.Web.Mvc.FeatureSet.RemoveFeature``1">
+            <summary>
+            Removes a feature of the specified type.
+            </summary>
+            <typeparam name="T">The type of the feature.</typeparam>
+        </member>
+        <member name="T:Kentico.Web.Mvc.RouteCollectionAddRoutesMethods">
+            <summary>
+            Provides methods to add routes to Kentico HTTP handlers.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.RouteCollectionAddRoutesMethods.MapRoutes(Kentico.Web.Mvc.ExtensionPoint{System.Web.Routing.RouteCollection})">
+            <summary>
+            Adds system routes such as Kentico HTTP handlers or feature specific routes. All required features must be enabled
+            prior to calling this method as feature specific routes cannot be added later.
+            </summary>
+            <param name="instance">The object that provides methods to add routes to Kentico HTTP handlers.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="instance"/> is null.</exception>
+        </member>
+        <member name="T:Kentico.Web.Mvc.AjaxHelperExtensions">
+            <summary>
+            Provides methods to render HTML fragments.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.AjaxHelperExtensions.Kentico(System.Web.Mvc.AjaxHelper)">
+            <summary>
+            Represents support for rendering HTML in AJAX scenarios within a view.
+            </summary>
+            <param name="target">An instance of the <see cref="T:System.Web.Mvc.AjaxHelper"/> class.</param>
+            <returns>An object that provides methods for rendering HTML in AJAX scenarios within a view..</returns>
+        </member>
+        <member name="T:Kentico.Web.Mvc.IApplicationBuilder">
+            <summary>
+            Interface for configuring the request pipeline using Kentico ASP.NET MVC integration features.
+            </summary>
+        </member>
+        <member name="T:Kentico.Web.Mvc.IOutputCacheKeyOptions">
+            <summary>
+            Options object definition with required vary by values.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.IOutputCacheKeyOptions.AddCacheKey(Kentico.Web.Mvc.IOutputCacheKey)">
+            <summary>
+            Adds <see cref="T:Kentico.Web.Mvc.IOutputCacheKey"/> to the collection of required vary by values.
+            </summary>
+            <param name="outputCacheKey">Output cache item.</param>
+        </member>
+        <member name="M:Kentico.Web.Mvc.IOutputCacheKeyOptions.GetOutputCacheKeys">
+            <summary>
+            Returns collection of <see cref="T:Kentico.Web.Mvc.IOutputCacheKey"/> objects.
+            </summary>
+        </member>
+        <member name="T:Kentico.Web.Mvc.UserOutputCacheKey">
+            <summary>
+            Class used to generate cache item key for different users.
+            </summary>
+        </member>
+        <member name="T:Kentico.Web.Mvc.Internal.ResponseFilter">
+            <summary>
+            Ensures that filter routines are executed on response stream data
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.Internal.ResponseFilter.Filters">
+            <summary>
+            Collection of registered filters, used for testing purposes.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.Internal.ResponseFilter.#ctor">
+            <summary>
+            Creates new instance of <see cref="T:Kentico.Web.Mvc.Internal.ResponseFilter"/>.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.Internal.ResponseFilter.#ctor(System.Collections.Generic.IList{System.Func{System.String,System.String}},System.Web.HttpContextBase)">
+            <summary>
+            Creates new instance of <see cref="T:Kentico.Web.Mvc.Internal.ResponseFilter"/>.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.Internal.ResponseFilter.Init">
+            <summary>
+            Initialize ResponseFilter pipeline
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.Internal.ResponseFilter.IsAvailable">
+            <summary>
+            Indicates whether response filter can be used. Depends on existence of underlaying <see cref="P:System.Web.HttpResponse.Filter"/> stream.
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.Internal.ResponseFilter.IsHtmlResponse">
+            <summary>
+            Indicates whether current response is text/html content type
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.Internal.ResponseFilter.Instance">
+            <summary>
+            Returns request specific instance of <see cref="T:Kentico.Web.Mvc.Internal.ResponseFilter"/>.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.Internal.ResponseFilter.Add(System.String,System.Func{System.String,System.String})">
+            <summary>
+            Add response filter to the collection of filters to be executed for current response.
+            </summary>
+            <param name="filterName">Unique filter name</param>
+            <param name="filter">Response filter</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="filter"/> or <paramref name="filterName"/> is not set.</exception>
+        </member>
+        <member name="M:Kentico.Web.Mvc.Internal.ResponseFilter.EnsureRepsonseFilter">
+            <summary>
+            Ensures that <see cref="T:Kentico.Web.Mvc.Internal.ResponseFilterStream" /> is registered as the <see cref="P:System.Web.HttpResponse.Filter"/> stream only once.
+            </summary>
+        </member>
+        <member name="T:Kentico.Web.Mvc.Internal.ResponseFilterStream">
+            <summary>
+            Provides a stream with filters that modifies the stream data.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.Internal.ResponseFilterStream.#ctor(System.IO.Stream,System.Collections.Generic.IEnumerable{System.Func{System.String,System.String}})">
+            <summary>
+            Creates new instance of <see cref="T:Kentico.Web.Mvc.Internal.ResponseFilterStream"/>
+            </summary>
+            <param name="outStream">Output stream</param>
+            <param name="responseFilters">Collection of response filters</param>
+        </member>
+        <member name="M:Kentico.Web.Mvc.Internal.ResponseFilterStream.Write(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Handles the write event.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.Internal.ResponseFilterStream.Close">
+            <summary>
+            Closes the current stream and releases any resources associated with the current stream.
+            Runs the processor over the stream data.
+            </summary>
+        </member>
+        <member name="T:Kentico.Web.Mvc.Internal.RouteRegistration">
+            <summary>
+            Performs registration of system routes to route collection.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.Internal.RouteRegistration.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Kentico.Web.Mvc.Internal.RouteRegistration"/> class.
+            </summary>
+        </member>
+        <member name="P:Kentico.Web.Mvc.Internal.RouteRegistration.Instance">
+            <summary>
+            Gets the current instance of the <see cref="T:Kentico.Web.Mvc.Internal.RouteRegistration"/> class.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.Internal.RouteRegistration.Add(System.Action{System.Web.Routing.RouteCollection})">
+            <summary>
+            <para>
+            Adds route registration to be executed on route collection supplied in <see cref="M:Kentico.Web.Mvc.Internal.RouteRegistration.Execute(System.Web.Routing.RouteCollection)"/> call.
+            </para>
+            <para>
+            Route registrations are queued and performed on the route collection passed to the <see cref="M:Kentico.Web.Mvc.Internal.RouteRegistration.Execute(System.Web.Routing.RouteCollection)"/> method, once the method is called.
+            After being executed, no additional route registrations can be added (i.e. route registration execution must not precede 'use feature' methods calls so that features
+            can add their specific routes).
+            </para>
+            </summary>
+            <param name="routeRegistration">Route registration to be executed on the route collection passed to <see cref="M:Kentico.Web.Mvc.Internal.RouteRegistration.Execute(System.Web.Routing.RouteCollection)"/>, once it is called.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="routeRegistration"/> is null.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when <see cref="M:Kentico.Web.Mvc.Internal.RouteRegistration.Execute(System.Web.Routing.RouteCollection)"/> has already been called.</exception>
+        </member>
+        <member name="M:Kentico.Web.Mvc.Internal.RouteRegistration.Execute(System.Web.Routing.RouteCollection)">
+            <summary>
+            <para>
+            Executes registration of routes collected via the <see cref="M:Kentico.Web.Mvc.Internal.RouteRegistration.Add(System.Action{System.Web.Routing.RouteCollection})"/> method into <paramref name="routeCollection"/>.
+            </para>
+            <para>
+            Once the registration executes, no more routes can be added.
+            </para>
+            </summary>
+            <param name="routeCollection">Route collection to register routes into.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="routeCollection"/> is null.</exception>
+        </member>
+        <member name="T:Kentico.Web.Mvc.Internal.SiteCultureConstraint">
+            <summary>
+            Route constraint restricting the culture parameter to cultures allowed by the site.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.Internal.SiteCultureConstraint.Match(System.Web.HttpContextBase,System.Web.Routing.Route,System.String,System.Web.Routing.RouteValueDictionary,System.Web.Routing.RouteDirection)">
+            <summary>
+            Determines whether the URL parameter contains an allowed culture name for this constraint.
+            </summary>
+            <param name="httpContext">Object that encapsulates information about the HTTP request.</param>
+            <param name="route">Object that this constraint belongs to.</param>
+            <param name="parameterName">Name of the parameter that is being checked.</param>
+            <param name="values">Object that contains the parameters for the URL.</param>
+            <param name="routeDirection">Object that indicates whether the constraint check is being performed when an incoming request is being handled or when a URL is being generated.</param>
+            <returns>True if the URL parameter contains an allowed culture name; otherwise, false.</returns>
+        </member>
+        <member name="T:Kentico.Web.Mvc.RouteCollectionExtensions">
+            <summary>
+            Provides methods to add routes to Kentico HTTP handlers.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.RouteCollectionExtensions.Kentico(System.Web.Routing.RouteCollection)">
+            <summary>
+            Returns an object that provides methods to add routes to Kentico HTTP handlers.
+            </summary>
+            <param name="target">An instance of the <see cref="T:System.Web.Routing.RouteCollection"/> class.</param>
+            <returns>An object that provides methods to add routes to Kentico HTTP handlers.</returns>
+        </member>
+        <member name="T:Kentico.Web.Mvc.HttpContextExtensions">
+            <summary>
+            Provides extension methods for the <see cref="T:System.Web.HttpContext"/> and <see cref="T:System.Web.HttpContextBase"/> classes.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.HttpContextExtensions.Kentico(System.Web.HttpContext)">
+            <summary>
+            Returns a feature set for the specified request.
+            </summary>
+            <param name="context">The object that encapsulates information about an HTTP request.</param>
+            <returns>A feature set for the specified request.</returns>
+        </member>
+        <member name="M:Kentico.Web.Mvc.HttpContextExtensions.Kentico(System.Web.HttpContextBase)">
+            <summary>
+            Returns a feature set for the specified request.
+            </summary>
+            <param name="context">The object that encapsulates information about an HTTP request.</param>
+            <returns>A feature set for the specified request.</returns>
+        </member>
+        <member name="M:Kentico.Web.Mvc.HttpContextExtensions.Kentico(CMS.Base.IHttpContext)">
+            <summary>
+            Returns a feature set for the specified request.
+            </summary>
+            <param name="context">The object that encapsulates information about an HTTP request.</param>
+            <returns>A feature set for the specified request.</returns>
+        </member>
+        <member name="T:Kentico.Web.Mvc.LocalizationHelper">
+            <summary>
+            Provides methods for localization of model validation errors and client validation rules.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizationHelper.LocalizeValidationResults(System.Collections.Generic.IEnumerable{System.Web.Mvc.ModelValidationResult},System.Object[])">
+            <summary>
+            Localizes the specified collection of validation errors and formats error messages using the string representation of a corresponding object in a specified array.
+            </summary>
+            <param name="results">A collection of validation errors.</param>
+            <param name="arguments">An object array that contains zero or more objects to format.</param>
+            <returns>A collection of localized validation errors.</returns>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizationHelper.LocalizeValidationRules(System.Collections.Generic.IEnumerable{System.Web.Mvc.ModelClientValidationRule},System.Object[])">
+            <summary>
+            Localizes the specified collection of client validation rules and formats error messages using the string representation of a corresponding object in a specified array.
+            </summary>
+            <param name="rules">A collection of client validation rules.</param>
+            <param name="arguments">An object array that contains zero or more objects to format.</param>
+            <returns>A collection of localized client validation rules.</returns>
+        </member>
+        <member name="T:Kentico.Web.Mvc.LocalizedDataTypeAttributeAdapter">
+            <summary>
+            Provides an adapter for attributes derived from the <see cref="T:System.ComponentModel.DataAnnotations.DataTypeAttribute"/> attribute, e.g. Phone or EmailAddress, that localizes error messages in validation errors and client validation rules.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizedDataTypeAttributeAdapter.#ctor(System.Web.Mvc.ModelMetadata,System.Web.Mvc.ControllerContext,System.ComponentModel.DataAnnotations.DataTypeAttribute,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Kentico.Web.Mvc.LocalizedDataTypeAttributeAdapter"/> class.
+            </summary>
+            <param name="metadata">The model metadata.</param>
+            <param name="context">The controller context.</param>
+            <param name="attribute">The <see cref="T:System.ComponentModel.DataAnnotations.DataTypeAttribute"/> attribute.</param>
+            <param name="ruleName">The name of the client validation rule.</param>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizedDataTypeAttributeAdapter.Validate(System.Object)">
+            <summary>
+            Retrieves a collection of localized validation errors for the model and returns it.
+            </summary>
+            <param name="container">The container for the model.</param>
+            <returns>A collection of localized validation errors for the model, or an empty collection if no errors have occurred.</returns>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizedDataTypeAttributeAdapter.GetClientValidationRules">
+            <summary>
+            Retrieves a collection of localized client validation rules for the model and returns it.
+            </summary>
+            <returns>A collection of localized client validation rules for the model.</returns>
+        </member>
+        <member name="T:Kentico.Web.Mvc.LocalizedMaxLengthAttributeAdapter">
+            <summary>
+            Provides an adapter for the <see cref="T:System.ComponentModel.DataAnnotations.MaxLengthAttribute"/> attribute that localizes error messages in validation errors and client validation rules.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizedMaxLengthAttributeAdapter.#ctor(System.Web.Mvc.ModelMetadata,System.Web.Mvc.ControllerContext,System.ComponentModel.DataAnnotations.MaxLengthAttribute)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Kentico.Web.Mvc.LocalizedMaxLengthAttributeAdapter"/> class.
+            </summary>
+            <param name="metadata">The model metadata.</param>
+            <param name="context">The controller context.</param>
+            <param name="attribute">The <see cref="T:System.ComponentModel.DataAnnotations.MaxLengthAttribute"/> attribute.</param>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizedMaxLengthAttributeAdapter.Validate(System.Object)">
+            <summary>
+            Retrieves a collection of localized validation errors for the model and returns it.
+            </summary>
+            <param name="container">The container for the model.</param>
+            <returns>A collection of localized validation errors for the model, or an empty collection if no errors have occurred.</returns>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizedMaxLengthAttributeAdapter.GetClientValidationRules">
+            <summary>
+            Retrieves a collection of localized client validation rules for the model and returns it.
+            </summary>
+            <returns>A collection of localized client validation rules for the model.</returns>
+        </member>
+        <member name="T:Kentico.Web.Mvc.LocalizedMinLengthAttributeAdapter">
+            <summary>
+            Provides an adapter for the <see cref="T:System.ComponentModel.DataAnnotations.MinLengthAttribute"/> attribute that localizes error messages in validation errors and client validation rules.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizedMinLengthAttributeAdapter.#ctor(System.Web.Mvc.ModelMetadata,System.Web.Mvc.ControllerContext,System.ComponentModel.DataAnnotations.MinLengthAttribute)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Kentico.Web.Mvc.LocalizedMinLengthAttributeAdapter"/> class.
+            </summary>
+            <param name="metadata">The model metadata.</param>
+            <param name="context">The controller context.</param>
+            <param name="attribute">The <see cref="T:System.ComponentModel.DataAnnotations.MinLengthAttribute"/> attribute.</param>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizedMinLengthAttributeAdapter.Validate(System.Object)">
+            <summary>
+            Retrieves a collection of localized validation errors for the model and returns it.
+            </summary>
+            <param name="container">The container for the model.</param>
+            <returns>A collection of localized validation errors for the model, or an empty collection if no errors have occurred.</returns>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizedMinLengthAttributeAdapter.GetClientValidationRules">
+            <summary>
+            Retrieves a collection of localized client validation rules for the model and returns it.
+            </summary>
+            <returns>A collection of localized client validation rules for the model.</returns>
+        </member>
+        <member name="T:Kentico.Web.Mvc.LocalizedDataAnnotationsModelMetadataProvider">
+            <summary>
+            Localizes model metadata that come from <see cref="T:System.ComponentModel.DataAnnotations.DisplayAttribute"/> and <see cref="T:System.ComponentModel.DisplayNameAttribute"/> data annotation attributes.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizedDataAnnotationsModelMetadataProvider.CreateMetadata(System.Collections.Generic.IEnumerable{System.Attribute},System.Type,System.Func{System.Object},System.Type,System.String)">
+            <summary>
+            Gets the localized metadata for the specified property.
+            </summary>
+            <param name="attributes">The attributes.</param>
+            <param name="containerType">The type of the container.</param>
+            <param name="modelAccessor">The model accessor.</param>
+            <param name="modelType">The type of the model.</param>
+            <param name="propertyName">The name of the property.</param>
+        </member>
+        <member name="T:Kentico.Web.Mvc.LocalizedRangeAttributeAdapter">
+            <summary>
+            Provides an adapter for the <see cref="T:System.ComponentModel.DataAnnotations.RangeAttribute"/> attribute that localizes error messages in validation errors and client validation rules.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizedRangeAttributeAdapter.#ctor(System.Web.Mvc.ModelMetadata,System.Web.Mvc.ControllerContext,System.ComponentModel.DataAnnotations.RangeAttribute)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Kentico.Web.Mvc.LocalizedRangeAttributeAdapter"/> class.
+            </summary>
+            <param name="metadata">The model metadata.</param>
+            <param name="context">The controller context.</param>
+            <param name="attribute">The <see cref="T:System.ComponentModel.DataAnnotations.RangeAttribute"/> attribute.</param>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizedRangeAttributeAdapter.Validate(System.Object)">
+            <summary>
+            Retrieves a collection of localized validation errors for the model and returns it.
+            </summary>
+            <param name="container">The container for the model.</param>
+            <returns>A collection of localized validation errors for the model, or an empty collection if no errors have occurred.</returns>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizedRangeAttributeAdapter.GetClientValidationRules">
+            <summary>
+            Retrieves a collection of localized client validation rules for the model and returns it.
+            </summary>
+            <returns>A collection of localized client validation rules for the model.</returns>
+        </member>
+        <member name="T:Kentico.Web.Mvc.LocalizedRegularExpressionAttributeAdapter">
+            <summary>
+            Provides an adapter for the <see cref="T:System.ComponentModel.DataAnnotations.RegularExpressionAttribute"/> attribute that localizes error messages in validation errors and client validation rules.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizedRegularExpressionAttributeAdapter.#ctor(System.Web.Mvc.ModelMetadata,System.Web.Mvc.ControllerContext,System.ComponentModel.DataAnnotations.RegularExpressionAttribute)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Kentico.Web.Mvc.LocalizedRegularExpressionAttributeAdapter"/> class.
+            </summary>
+            <param name="metadata">The model metadata.</param>
+            <param name="context">The controller context.</param>
+            <param name="attribute">The <see cref="T:System.ComponentModel.DataAnnotations.RegularExpressionAttribute"/> attribute.</param>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizedRegularExpressionAttributeAdapter.Validate(System.Object)">
+            <summary>
+            Retrieves a collection of localized validation errors for the model and returns it.
+            </summary>
+            <param name="container">The container for the model.</param>
+            <returns>A collection of localized validation errors for the model, or an empty collection if no errors have occurred.</returns>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizedRegularExpressionAttributeAdapter.GetClientValidationRules">
+            <summary>
+            Retrieves a collection of localized client validation rules for the model and returns it.
+            </summary>
+            <returns>A collection of localized client validation rules for the model.</returns>
+        </member>
+        <member name="T:Kentico.Web.Mvc.LocalizedRequiredAttributeAdapter">
+            <summary>
+            Provides an adapter for the <see cref="T:System.ComponentModel.DataAnnotations.RequiredAttribute"/> attribute that localizes error messages in validation errors and client validation rules.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizedRequiredAttributeAdapter.#ctor(System.Web.Mvc.ModelMetadata,System.Web.Mvc.ControllerContext,System.ComponentModel.DataAnnotations.RequiredAttribute)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Kentico.Web.Mvc.LocalizedRequiredAttributeAdapter"/> class.
+            </summary>
+            <param name="metadata">The model metadata.</param>
+            <param name="context">The controller context.</param>
+            <param name="attribute">The <see cref="T:System.ComponentModel.DataAnnotations.RequiredAttribute"/> attribute.</param>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizedRequiredAttributeAdapter.Validate(System.Object)">
+            <summary>
+            Retrieves a collection of localized validation errors for the model and returns it.
+            </summary>
+            <param name="container">The container for the model.</param>
+            <returns>A collection of localized validation errors for the model, or an empty collection if no errors have occurred.</returns>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizedRequiredAttributeAdapter.GetClientValidationRules">
+            <summary>
+            Retrieves a collection of localized client validation rules for the model and returns it.
+            </summary>
+            <returns>A collection of localized client validation rules for the model.</returns>
+        </member>
+        <member name="T:Kentico.Web.Mvc.LocalizedStringLengthAttributeAdapter">
+            <summary>
+            Provides an adapter for the <see cref="T:System.ComponentModel.DataAnnotations.StringLengthAttribute"/> attribute that localizes error messages in validation errors and client validation rules.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizedStringLengthAttributeAdapter.#ctor(System.Web.Mvc.ModelMetadata,System.Web.Mvc.ControllerContext,System.ComponentModel.DataAnnotations.StringLengthAttribute)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Kentico.Web.Mvc.LocalizedStringLengthAttributeAdapter"/> class.
+            </summary>
+            <param name="metadata">The model metadata.</param>
+            <param name="context">The controller context.</param>
+            <param name="attribute">The <see cref="T:System.ComponentModel.DataAnnotations.StringLengthAttribute"/> attribute.</param>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizedStringLengthAttributeAdapter.Validate(System.Object)">
+            <summary>
+            Retrieves a collection of localized validation errors for the model and returns it.
+            </summary>
+            <param name="container">The container for the model.</param>
+            <returns>A collection of localized validation errors for the model, or an empty collection if no errors have occurred.</returns>
+        </member>
+        <member name="M:Kentico.Web.Mvc.LocalizedStringLengthAttributeAdapter.GetClientValidationRules">
+            <summary>
+            Retrieves a collection of localized client validation rules for the model and returns it.
+            </summary>
+            <returns>A collection of localized client validation rules for the model.</returns>
+        </member>
+        <member name="T:Kentico.Web.Mvc.IFeatureSet">
+            <summary>
+            Represents a set of features available for the current request.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.IFeatureSet.SetFeature``1(``0)">
+            <summary>
+            Adds or replaces a feature of the specified type.
+            </summary>
+            <typeparam name="T">The type of the feature.</typeparam>
+            <param name="feature">The feature to add or replace.</param>
+        </member>
+        <member name="M:Kentico.Web.Mvc.IFeatureSet.GetFeature``1">
+            <summary>
+            Returns a feature of the specified type.
+            </summary>
+            <typeparam name="T">The type of the feature.</typeparam>
+            <returns>A feature of the specified type, if available; otherwise, null.</returns>
+        </member>
+        <member name="M:Kentico.Web.Mvc.IFeatureSet.RemoveFeature``1">
+            <summary>
+            Removes a feature of the specified type.
+            </summary>
+            <typeparam name="T">The type of the feature.</typeparam>
+        </member>
+        <member name="T:Kentico.Web.Mvc.HtmlHelperExtensions">
+            <summary>
+            Provides methods to render HTML fragments.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.HtmlHelperExtensions.Kentico(System.Web.Mvc.HtmlHelper)">
+            <summary>
+            Returns an object that provides methods to render HTML fragments.
+            </summary>
+            <param name="target">An instance of the <see cref="T:System.Web.Mvc.HtmlHelper"/> class.</param>
+            <returns>An object that provides methods to render HTML fragments.</returns>
+        </member>
+        <member name="T:Kentico.Web.Mvc.ExtensionPoint`1">
+            <summary>
+            Represents a point for extension methods.
+            </summary>
+            <typeparam name="T">The type of the class that is a target of extension methods.</typeparam>
+        </member>
+        <member name="P:Kentico.Web.Mvc.ExtensionPoint`1.Target">
+            <summary>
+            Instance of class that is a target of extension methods.
+            </summary>
+        </member>
+        <member name="T:Kentico.Web.Mvc.HtmlHelperResolveUrlsMethods">
+            <summary>
+            Provides methods to resolve relative URLs in HTML fragments.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.HtmlHelperResolveUrlsMethods.ResolveUrls(Kentico.Web.Mvc.ExtensionPoint{System.Web.Mvc.HtmlHelper},System.String)">
+            <summary>
+            Resolves relative URLs in the HTML fragment so that they can be used by the browser.
+            </summary>
+            <param name="instance">The object that provides methods to render HTML fragments.</param>
+            <param name="html">An HTML fragment with potential relative URLs.</param>
+            <returns>An HTML fragment where relative URLs are replaced with URLs that can be used by the browser.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="instance"/> is null.</exception>
+        </member>
+        <member name="T:Kentico.Web.Mvc.RouteHandlerWrapper`1">
+            <summary>
+            Enable classes implementing <see cref="T:System.Web.IHttpHandler"/> interface to be used as <see cref="T:System.Web.Routing.IRouteHandler"/>.
+            </summary>
+            <typeparam name="THttpHandler">Class implementing <see cref="T:System.Web.IHttpHandler"/> interface.</typeparam>
+        </member>
+        <member name="M:Kentico.Web.Mvc.RouteHandlerWrapper`1.GetHttpHandler(System.Web.Routing.RequestContext)">
+            <summary>
+            Retrieves an instance of class implementing <see cref="T:System.Web.IHttpHandler"/> interface,
+            based on the type specified in the constructor.
+            </summary>
+            <param name="requestContext">An object that encapsulates information about the request.</param>
+            <returns>Returns class that can process a request.</returns>
+        </member>
+        <member name="T:Kentico.Web.Mvc.UrlHelperExtensions">
+            <summary>
+            Provides methods to build URLs to Kentico content.
+            </summary>
+        </member>
+        <member name="M:Kentico.Web.Mvc.UrlHelperExtensions.Kentico(System.Web.Mvc.UrlHelper)">
+            <summary>
+            Returns an object that provides methods to build URLs to Kentico content.
+            </summary>
+            <param name="target">An instance of the <see cref="T:System.Web.Mvc.UrlHelper"/> class.</param>
+            <returns>An object that provides methods to build URLs to Kentico content.</returns>
+        </member>
+    </members>
+</doc>

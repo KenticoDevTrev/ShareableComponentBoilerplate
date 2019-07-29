@@ -1,0 +1,341 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Azure.Search.Common</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Rest.Azure.CloudExceptionExtensions">
+            <summary>
+            Defines extension methods for the CloudException class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Rest.Azure.CloudExceptionExtensions.IsAccessConditionFailed(Microsoft.Rest.Azure.CloudException)">
+            <summary>
+            Indicates whether the exception is the result of a failed access condition (ETag) check.
+            </summary>
+            <param name="exception">The exception to check.</param>
+            <returns>true if the exception is a failed access condition (HTTP 412 Precondition Failed), false otherwise.</returns>
+        </member>
+        <member name="T:Microsoft.Azure.Search.Common.EnumerableExtensions">
+            <summary>
+            Defines extension methods for IEnumerable that are used in the implementation of the Azure Search
+            .NET SDK.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Common.EnumerableExtensions.ToCommaSeparatedString``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Converts the elements of a collection to strings and concatenates them into a comma-separated list,
+            or returns null for null or empty collections.
+            </summary>
+            <typeparam name="T">The type of elements that will be converted to strings.</typeparam>
+            <param name="enumerable">The collection to turn into a comma-separated string.</param>
+            <returns>A comma-separated string, or null if enumerable is null or empty.</returns>
+        </member>
+        <member name="T:Microsoft.Azure.Search.Common.Throw">
+            <summary>
+            Defines utility methods for validating arguments.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Common.Throw.IfArgument(System.Boolean,System.String,System.String)">
+            <summary>
+            Throws ArgumentException with the given parameter name and optional message if the given Boolean
+            value is true.
+            </summary>
+            <param name="isInvalid">The flag to test. This method throws if it's true and does nothing if
+            it's false.</param>
+            <param name="paramName">The name of the parameter being validated. This is passed to the
+            ArgumentException constructor.</param>
+            <param name="message">An optional error message to include in the ArgumentException. The default
+            message is "Invalid argument."</param>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Common.Throw.IfArgumentNull``1(``0,System.String,System.String)">
+            <summary>
+            Throws ArgumentNullException with the given parameter name and optional message if the given
+            reference is null.
+            </summary>
+            <typeparam name="T">The type of value to test. Must be a reference type.</typeparam>
+            <param name="value">The reference to test for null.</param>
+            <param name="paramName">The name of the parameter being validated. This is passed to the
+            ArgumentNullException constructor.</param>
+            <param name="message">An optional error message to include in the ArgumentNullException.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Common.Throw.IfArgumentNullOrEmpty(System.String,System.String,System.String)">
+            <summary>
+            Throws ArgumentNullException or ArgumentException with the given parameter name and optional message
+            if the given string is null or empty, respectively.
+            </summary>
+            <param name="value">The string to test for null or empty.</param>
+            <param name="paramName">The name of the parameter being validated. This is passed to the
+            ArgumentNullException or ArgumentException constructor.</param>
+            <param name="message">An optional error message to include in the ArgumentNullException
+            or ArgumentException.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Common.Throw.IfNullOrEmptySearchServiceName(System.String)">
+            <summary>
+            Throws ArgumentNullException or ArgumentException with a pre-determined message if the given search
+            service name is null or empty, respectively.
+            </summary>
+            <param name="searchServiceName">The search service name to validate.</param>
+        </member>
+        <member name="T:Microsoft.Azure.Search.Models.ExtensibleEnum`1">
+            <summary>
+            Abstract base class for types that act like enums, but can be extended with arbitrary string values.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Models.ExtensibleEnum`1.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the ExtensibleEnum class.
+            </summary>
+            <param name="name">The value for this instance of the extensible enumeration.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Models.ExtensibleEnum`1.op_Equality(Microsoft.Azure.Search.Models.ExtensibleEnum{`0},`0)">
+            <summary>
+            Compares two ExtensibleEnum values for equality.
+            </summary>
+            <param name="lhs">The first ExtensibleEnum to compare.</param>
+            <param name="rhs">The second ExtensibleEnum to compare.</param>
+            <returns>true if the ExtensibleEnum objects are equal or are both null; false otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Models.ExtensibleEnum`1.op_Inequality(Microsoft.Azure.Search.Models.ExtensibleEnum{`0},`0)">
+            <summary>
+            Compares two ExtensibleEnum values for inequality.
+            </summary>
+            <param name="lhs">The first ExtensibleEnum to compare.</param>
+            <param name="rhs">The second ExtensibleEnum to compare.</param>
+            <returns>true if the ExtensibleEnum objects are not equal; false otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Models.ExtensibleEnum`1.op_Explicit(Microsoft.Azure.Search.Models.ExtensibleEnum{`0})~System.String">
+            <summary>
+            Defines explicit conversion from ExtensibleEnum to string.
+            </summary>
+            <param name="name">ExtensibleEnum to convert.</param>
+            <returns>The ExtensibleEnum as a string.</returns>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Models.ExtensibleEnum`1.Lookup(System.String)">
+            <summary>
+            Looks up an ExtensibleEnum instance by name, or returns null if the given name does not match one of the
+            known values of this ExtensibleEnum.
+            </summary>
+            <param name="name">Name of the ExtensibleEnum value.</param>
+            <returns>An instance of type T with the given name, or null if no such instance could be found.</returns>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Models.ExtensibleEnum`1.Equals(`0)">
+            <summary>
+            Compares the ExtensibleEnum for equality with another ExtensibleEnum.
+            </summary>
+            <param name="other">The ExtensibleEnum with which to compare.</param>
+            <returns><c>true</c> if the ExtensibleEnum objects are equal; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Models.ExtensibleEnum`1.Equals(System.Object)">
+            <summary>
+            Determines whether the specified object is equal to the current object.
+            </summary>
+            <param name="obj">The object to compare with the current object.</param>
+            <returns><c>true</c> if the specified object is equal to the current object; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Models.ExtensibleEnum`1.GetHashCode">
+            <summary>
+            Serves as the default hash function.
+            </summary>
+            <returns>A hash code for the current object.</returns>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Models.ExtensibleEnum`1.ToString">
+            <summary>
+            Returns a string representation of the ExtensibleEnum.
+            </summary>
+            <returns>The ExtensibleEnum as a string.</returns>
+        </member>
+        <member name="T:Microsoft.Azure.Search.Models.SerializePropertyNamesAsCamelCaseAttribute">
+            <summary>
+            Indicates that the public properties of a model class should be serialized as camel-case in order to match
+            the field names of an Azure Search index.
+            </summary>
+            <remarks>
+            Classes without this attribute are expected to have property names that exactly match their corresponding
+            fields names in Azure Search. Otherwise, it would not be possible to use instances of the class to populate
+            the index.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Models.SerializePropertyNamesAsCamelCaseAttribute.IsDefinedOnType``1">
+            <summary>
+            Indicates whether the given type is annotated with SerializePropertyNamesAsCamelCaseAttribute.
+            </summary>
+            <typeparam name="T">The type to test.</typeparam>
+            <returns>true if the given type is annotated with SerializePropertyNamesAsCamelCaseAttribute,
+            false otherwise.</returns>
+        </member>
+        <member name="T:Microsoft.Azure.Search.Models.SearchRequestOptions">
+            <summary>
+            Additional parameters for a set of operations.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Models.SearchRequestOptions.#ctor">
+            <summary>
+            Initializes a new instance of the SearchRequestOptions class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Models.SearchRequestOptions.#ctor(System.Nullable{System.Guid})">
+            <summary>
+            Initializes a new instance of the SearchRequestOptions class.
+            </summary>
+            <param name="clientRequestId">The tracking ID sent with the request
+            to help with debugging.</param>
+        </member>
+        <member name="P:Microsoft.Azure.Search.Models.SearchRequestOptions.ClientRequestId">
+            <summary>
+            Gets or sets the tracking ID sent with the request to help with
+            debugging.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Search.SearchCredentials">
+            <summary>
+            Credentials used to authenticate to an Azure Search service.
+            <see href="https://docs.microsoft.com/rest/api/searchservice/"/>
+            </summary>
+            <remarks>
+            See <see href="https://docs.microsoft.com/azure/search/search-security-api-keys"/> for more information about API keys in Azure Search.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Azure.Search.SearchCredentials.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the SearchCredentials class with a query key or an admin key. Use a query
+            key if your application does not require write access to the Search Service or index.
+            </summary>
+            <param name="apiKey">api-key used to authenticate to the Azure Search service.</param>
+            <remarks>
+            If your application performs only query operations on an index, we recommend passing a query key for the
+            <paramref name="apiKey"/> parameter. This ensures that you have read-only access to the index, which is
+            consistent with the principle of least privilege.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Azure.Search.SearchCredentials.ApiKey">
+            <summary>
+            api-key used to authenticate to an Azure Search service. Can be either a query key for querying only, or
+            an admin key that enables index and document management as well.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Search.SearchCredentials.ProcessHttpRequestAsync(System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken)">
+            <summary>
+            Adds the credentials to the given HTTP request.
+            </summary>
+            <param name="request">HTTP request</param>
+            <param name="cancellationToken">Cancellation token</param>
+            <returns>A Task to track the progress of the async operation.</returns>
+        </member>
+        <member name="T:Microsoft.Azure.Search.Serialization.ExtensibleEnumValueFactory`1">
+            <summary>
+            Delegate type for a factory method that creates or looks up an ExtensibleEnum instance from a given string.
+            </summary>
+            <typeparam name="T">The type of ExtensibleEnum returned.</typeparam>
+            <param name="name">The enum value to look up or create.</param>
+            <returns>An instance of type T.</returns>
+        </member>
+        <member name="T:Microsoft.Azure.Search.Serialization.ExtensibleEnumConverter`1">
+            <summary>
+            Serializes and deserializes "extensible enums" to and from JSON. Extensible enums are like enumerations in
+            that they have well-known values, but they are extensible with new values and the values are based on strings
+            instead of integers.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Serialization.ExtensibleEnumConverter`1.#ctor">
+            <summary>
+            Initializes a new instance of the ExtensibleEnumConverter class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Serialization.ExtensibleEnumConverter`1.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the ExtensibleEnumConverter class.
+            </summary>
+            <param name="factoryMethodName">
+            The name of a public static method that creates an instance of type T given a string value; Default is
+            "Create".
+            </param>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Serialization.ExtensibleEnumConverter`1.CanConvert(System.Type)">
+            <summary>
+            Indicates whether this converter can serialize or deserialize objects of the given type.
+            </summary>
+            <param name="objectType">The type to test against.</param>
+            <returns>true if objectType derives from ExtensibleEnum, false otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Serialization.ExtensibleEnumConverter`1.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>
+            Deserializes a string into an ExtensibleEnum.
+            </summary>
+            <param name="reader">The JSON reader.</param>
+            <param name="objectType">Ignored by this method.</param>
+            <param name="existingValue">Ignored by this method.</param>
+            <param name="serializer">Ignored by this method.</param>
+            <returns>An instance of type T, or null if the current JSON token is null.</returns>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Serialization.ExtensibleEnumConverter`1.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>
+            Serializes an ExtensibleEnum to a JSON string.
+            </summary>
+            <param name="writer">The JSON writer.</param>
+            <param name="value">The value to serialize.</param>
+            <param name="serializer">Ignored by this method.</param>
+        </member>
+        <member name="T:Microsoft.Azure.Search.Serialization.JsonReaderExtensions">
+            <summary>
+            Defines extension methods for JsonReader that make it easier to implement a custom JsonConverter.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Serialization.JsonReaderExtensions.ExpectAndAdvance(Newtonsoft.Json.JsonReader,Newtonsoft.Json.JsonToken,System.Object)">
+            <summary>
+            Asserts that the given JSON reader is positioned on a token with the expected type. Optionally asserts
+            that the value of the token matches a given expected value. If any of the assertions fail, this method
+            throws a JsonSerializationException. Otherwise, this method attempts to advance the JSON reader to the
+            next position.
+            </summary>
+            <param name="reader">The JSON reader.</param>
+            <param name="expectedToken">The JSON token on which the reader is expected to be positioned.</param>
+            <param name="expectedValue">Optional; The expected value of the current JSON token.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Serialization.JsonReaderExtensions.ExpectAndAdvance``1(Newtonsoft.Json.JsonReader,Newtonsoft.Json.JsonToken,System.Object)">
+            <summary>
+            Asserts that the given JSON reader is positioned on a token with the expected type and retrieves the
+            value of the token, if any. Optionally asserts that the value of the token matches a given expected
+            value. If any of the assertions fail, this method throws a JsonSerializationException. Otherwise, this
+            method attempts to advance the JSON reader to the next position.
+            </summary>
+            <typeparam name="TValue">The expected type of the value of the current JSON token.</typeparam>
+            <param name="reader">The JSON reader.</param>
+            <param name="expectedToken">The JSON token on which the reader is expected to be positioned.</param>
+            <param name="expectedValue">Optional; The expected value of the current JSON token.</param>
+            <returns>
+            The value of the JSON token before advancing the reader, or default(TValue) if the token has no value.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Serialization.JsonReaderExtensions.Expect(Newtonsoft.Json.JsonReader,Newtonsoft.Json.JsonToken,System.Object)">
+            <summary>
+            Asserts that the given JSON reader is positioned on a token with the expected type. Optionally asserts
+            that the value of the token matches a given expected value. If any of the assertions fail, this method
+            throws a JsonSerializationException.
+            </summary>
+            <param name="reader">The JSON reader.</param>
+            <param name="expectedToken">The JSON token on which the reader is expected to be positioned.</param>
+            <param name="expectedValue">Optional; The expected value of the current JSON token.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Serialization.JsonReaderExtensions.Expect``1(Newtonsoft.Json.JsonReader,Newtonsoft.Json.JsonToken,System.Object)">
+            <summary>
+            Asserts that the given JSON reader is positioned on a token with the expected type and retrieves the
+            value of the token, if any. Optionally asserts that the value of the token matches a given expected
+            value. If any of the assertions fail, this method throws a JsonSerializationException.
+            </summary>
+            <typeparam name="TValue">The expected type of the value of the current JSON token.</typeparam>
+            <param name="reader">The JSON reader.</param>
+            <param name="expectedToken">The JSON token on which the reader is expected to be positioned.</param>
+            <param name="expectedValue">Optional; The expected value of the current JSON token.</param>
+            <returns>
+            The value of the current JSON token, or default(TValue) if the current token has no value.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Azure.Search.Serialization.JsonReaderExtensions.Advance(Newtonsoft.Json.JsonReader)">
+            <summary>
+            Advances the given JSON reader, or throws a JsonSerializationException if it cannot be advanced.
+            </summary>
+            <param name="reader">The JSON reader to advance.</param>
+        </member>
+    </members>
+</doc>

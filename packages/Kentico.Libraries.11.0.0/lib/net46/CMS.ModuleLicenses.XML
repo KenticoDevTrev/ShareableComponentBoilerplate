@@ -1,0 +1,228 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CMS.ModuleLicenses</name>
+    </assembly>
+    <members>
+        <member name="T:CMS.ModuleLicenses.ModuleLicenseKeyInfo">
+            <summary>
+            ModuleLicenseKeyInfo data container class.
+            </summary>
+        </member>
+        <member name="F:CMS.ModuleLicenses.ModuleLicenseKeyInfo.OBJECT_TYPE">
+            <summary>
+            Object type
+            </summary>
+        </member>
+        <member name="F:CMS.ModuleLicenses.ModuleLicenseKeyInfo.TYPEINFO">
+            <summary>
+            Type information.
+            </summary>
+        </member>
+        <member name="P:CMS.ModuleLicenses.ModuleLicenseKeyInfo.ModuleLicenseKeyID">
+            <summary>
+            Module license key ID
+            </summary>
+        </member>
+        <member name="P:CMS.ModuleLicenses.ModuleLicenseKeyInfo.ModuleLicenseKeyGuid">
+            <summary>
+            Module license key guid
+            </summary>
+        </member>
+        <member name="P:CMS.ModuleLicenses.ModuleLicenseKeyInfo.ModuleLicenseKeyLastModified">
+            <summary>
+            Module license key last modified
+            </summary>
+        </member>
+        <member name="P:CMS.ModuleLicenses.ModuleLicenseKeyInfo.ModuleLicenseKeyLicense">
+            <summary>
+            Module license key data
+            </summary>
+        </member>
+        <member name="P:CMS.ModuleLicenses.ModuleLicenseKeyInfo.ModuleLicenseKeyResourceID">
+            <summary>
+            Module license key resource ID
+            </summary>
+        </member>
+        <member name="M:CMS.ModuleLicenses.ModuleLicenseKeyInfo.DeleteObject">
+            <summary>
+            Deletes the object using appropriate provider.
+            </summary>
+        </member>
+        <member name="M:CMS.ModuleLicenses.ModuleLicenseKeyInfo.SetObject">
+            <summary>
+            Updates the object using appropriate provider.
+            </summary>
+        </member>
+        <member name="M:CMS.ModuleLicenses.ModuleLicenseKeyInfo.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Constructor for de-serialization.
+            </summary>
+            <param name="info">Serialization info</param>
+            <param name="context">Streaming context</param>
+        </member>
+        <member name="M:CMS.ModuleLicenses.ModuleLicenseKeyInfo.#ctor">
+            <summary>
+            Constructor - Creates an empty ModuleLicenseKeyInfo object.
+            </summary>
+        </member>
+        <member name="M:CMS.ModuleLicenses.ModuleLicenseKeyInfo.#ctor(System.Data.DataRow)">
+            <summary>
+            Constructor - Creates a new ModuleLicenseKeyInfo object from the given DataRow.
+            </summary>
+            <param name="dr">DataRow with the object data</param>
+        </member>
+        <member name="T:CMS.ModuleLicenses.ModuleLicenseKeyInfoProvider">
+            <summary>
+            Class providing ModuleLicenseKeyInfo management.
+            </summary>
+        </member>
+        <member name="M:CMS.ModuleLicenses.ModuleLicenseKeyInfoProvider.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:CMS.ModuleLicenses.ModuleLicenseKeyInfoProvider.GetModuleLicenseKeys">
+            <summary>
+            Returns a query for all the ModuleLicenseKeyInfo objects.
+            </summary>
+        </member>
+        <member name="M:CMS.ModuleLicenses.ModuleLicenseKeyInfoProvider.GetModuleLicenseKeyInfo(System.Int32)">
+            <summary>
+            Returns ModuleLicenseKeyInfo with specified ID.
+            </summary>
+            <param name="id">ModuleLicenseKeyInfo ID</param>
+        </member>
+        <member name="M:CMS.ModuleLicenses.ModuleLicenseKeyInfoProvider.GetModuleLicenseKeyInfo(System.Guid)">
+            <summary>
+            Returns ModuleLicenseKeyInfo with specified GUID.
+            </summary>
+            <param name="guid">ModuleLicenseKeyInfo GUID</param>                
+        </member>
+        <member name="M:CMS.ModuleLicenses.ModuleLicenseKeyInfoProvider.GetResourceModuleLicenseKeyInfos(System.Int32)">
+            <summary>
+            Returns a query for all module license keys of ModuleLicenseKeyInfo objects of given resource.
+            </summary>
+            <param name="resourceId">ID of a resource</param>
+        </member>
+        <member name="M:CMS.ModuleLicenses.ModuleLicenseKeyInfoProvider.SetModuleLicenseKeyInfo(CMS.ModuleLicenses.ModuleLicenseKeyInfo)">
+            <summary>
+            Sets (updates or inserts) specified ModuleLicenseKeyInfo.
+            </summary>
+            <param name="infoObj">ModuleLicenseKeyInfo to be set</param>
+        </member>
+        <member name="M:CMS.ModuleLicenses.ModuleLicenseKeyInfoProvider.DeleteModuleLicenseKeyInfo(CMS.ModuleLicenses.ModuleLicenseKeyInfo)">
+            <summary>
+            Deletes specified ModuleLicenseKeyInfo.
+            </summary>
+            <param name="infoObj">ModuleLicenseKeyInfo to be deleted</param>
+        </member>
+        <member name="M:CMS.ModuleLicenses.ModuleLicenseKeyInfoProvider.DeleteModuleLicenseKeyInfo(System.Int32)">
+            <summary>
+            Deletes ModuleLicenseKeyInfo with specified ID.
+            </summary>
+            <param name="id">ModuleLicenseKeyInfo ID</param>
+        </member>
+        <member name="M:CMS.ModuleLicenses.ModuleLicenseKeyInfoProvider.Clear(System.Boolean)">
+            <summary>
+            Clears hashtables.
+            </summary>
+            <param name="logTasks">If true, web farm tasks are logged</param>
+        </member>
+        <member name="M:CMS.ModuleLicenses.ModuleLicenseKeyInfoProvider.SetInfo(CMS.ModuleLicenses.ModuleLicenseKeyInfo)">
+            <summary>
+            Inserts or Updates the object to the database.
+            </summary>
+            <param name="info">Object to insert / update</param>
+        </member>
+        <member name="M:CMS.ModuleLicenses.ModuleLicenseKeyInfoProvider.DeleteInfo(CMS.ModuleLicenses.ModuleLicenseKeyInfo)">
+            <summary>
+            Deletes the object to the database.
+            </summary>
+            <param name="info">Object to delete</param>
+        </member>
+        <member name="M:CMS.ModuleLicenses.ModuleLicenseKeyInfoProvider.ClearHashtables(System.Boolean)">
+            <summary>
+            Clears the object's hashtables and special cache for module licenses.
+            </summary>
+            <param name="logTasks">whether to log webfarm tasks</param>
+        </member>
+        <member name="T:CMS.ModuleLicenses.ModuleLicensesHelper">
+            <summary>
+            Helper class providing API for managing module licenses.
+            </summary>
+        </member>
+        <member name="P:CMS.ModuleLicenses.ModuleLicensesHelper.LicensesDataCache">
+            <summary>
+            Cache for valid module licenses data.
+            </summary>
+        </member>
+        <member name="M:CMS.ModuleLicenses.ModuleLicensesHelper.GenerateKeyPair(System.String@,System.String@)">
+            <summary>
+            Creates new private and public key pair for generating and validating module licenses. Created keys are encoded to Base64.
+            </summary>
+            <param name="privateKey">Created private key for generating module licenses</param>
+            <param name="publicKey">Created public key for verifying module licenses</param>
+        </member>
+        <member name="M:CMS.ModuleLicenses.ModuleLicensesHelper.CreateModuleLicense(System.String,System.String)">
+            <summary>
+            Creates a module license containing given module license data and signature based on given private key.
+            </summary>
+            <param name="licenseData">Data to be stored in module license</param>
+            <param name="privateKey">Private key, generated by <see cref="M:CMS.ModuleLicenses.ModuleLicensesHelper.GenerateKeyPair(System.String@,System.String@)"/> used for signing module license data</param>
+            <returns>Module license containing given module license data and signature</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="licenseData"/> or <paramref name="privateKey"/> is null</exception>
+            <exception cref="T:System.ArgumentException"><paramref name="privateKey"/> has invalid format of private key encoded in Base64</exception>
+        </member>
+        <member name="M:CMS.ModuleLicenses.ModuleLicensesHelper.GetValidModuleLicenses(System.String,System.String)">
+            <summary>
+            Returns collection of valid module license data for given module.
+            </summary>
+            <param name="moduleName">Code name of module which licenses to get</param>
+            <param name="publicKey">Public key, generated by <see cref="M:CMS.ModuleLicenses.ModuleLicensesHelper.GenerateKeyPair(System.String@,System.String@)"/> for validating licenses of given module</param>
+            <returns>Collection of valid module license data for given module</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="moduleName"/> or <paramref name="publicKey"/> is null</exception>
+            <exception cref="T:System.ArgumentException"><paramref name="moduleName"/>is not valid name of existing module or <paramref name="publicKey"/> has invalid format of public key encoded in Base64</exception>
+        </member>
+        <member name="M:CMS.ModuleLicenses.ModuleLicensesHelper.IsModuleLicenseValid(System.String,System.String,System.String)">
+            <summary>
+            Validates module license data and it's signature with given public key.
+            </summary>
+            <param name="licenseData">License data to validate</param>
+            <param name="signature">License signature to validate</param>
+            <param name="publicKey">Public key, generated by <see cref="M:CMS.ModuleLicenses.ModuleLicensesHelper.GenerateKeyPair(System.String@,System.String@)"/> for validation</param>
+            <returns>True whether license data and signature is valid, otherwise false</returns>
+            <exception cref="T:System.ArgumentException"><paramref name="publicKey"/> has invalid format of public key encoded in Base64</exception>
+        </member>
+        <member name="M:CMS.ModuleLicenses.ModuleLicensesHelper.ParseModuleLicense(System.String,System.String@,System.String@)">
+            <summary>
+            Parse given module license to license data and it's signature.
+            </summary>
+            <param name="license">Module license to parse</param>
+            <param name="licenseData">Parsed data of module license</param>
+            <param name="signature">Parsed signature of module license</param>
+            <returns>True whether module license has been parsed successfully, otherwise false</returns>
+        </member>
+        <member name="M:CMS.ModuleLicenses.ModuleLicensesHelper.ClearCache">
+            <summary>
+            Clears cache for storing valid module license data.
+            </summary>
+        </member>
+        <member name="T:CMS.ModuleLicenses.ModuleLicensesUsageDataSource">
+            <summary>
+            Data source for providing statistical information about Module licenses.
+            </summary>
+        </member>
+        <member name="P:CMS.ModuleLicenses.ModuleLicensesUsageDataSource.Name">
+            <summary>
+            Get the data source name.
+            </summary>
+        </member>
+        <member name="M:CMS.ModuleLicenses.ModuleLicensesUsageDataSource.GetData">
+            <summary>
+            Returns data collection with count of licensed modules and count of all module license keys of all modules.
+            </summary>
+            <returns>Collected data</returns>
+        </member>
+    </members>
+</doc>

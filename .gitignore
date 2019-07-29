@@ -335,7 +335,7 @@ export*.zip
 # Removing actual Mother, you may or may not want this in your actual gitignore, but for the BOilerplate can't upload CMS to public 
 /CMS/*
 /Lib/*
-packages
+
 
 # Removing nuget build file
 *.bat
