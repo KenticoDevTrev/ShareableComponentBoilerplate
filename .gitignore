@@ -260,29 +260,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-
-
-
 # Ignore all smart search indexes, but not the other system folder contents
-#CMS/App_Data/CMSModules/SmartSearch/**
-#!CMS/App_Data/CMSModules/SmartSearch/*/
-#!CMS/App_Data/CMSModules/SmartSearch/_StopWords/**
-#!CMS/App_Data/CMSModules/SmartSearch/_Synonyms/**
 
-
-# You can enable bin if for your pushing cycles you do not build and you wish to track BIN changes
-## !/Boilerplate/[Bb]in/
-
-## Project specific ignores
-# Sensitive settings
-AppSettings.config
-ConnectionStrings.config
-SessionState.config
-CI-Restore.bat
-
-# Project media libraries (recommend shared file storage)
-# e.g. CMS/{SiteCodeName}
-#/CMS/temp_images/
 */obj/
 
 * - Copy*
@@ -302,21 +281,7 @@ CI-Restore.bat
 *.tis
 export*.zip
 /git-update.log.txt
-#CMS/*/media/**
-#!CMS/CMSWebParts/Media/**
-#!CMS/CMSFormControls/Media/**
-#CMS/*/BizFormFiles/
-#CMS/*.webinfo
-
-# You can enable bin if for your pushing cycles you do not build and you wish to track BIN changes
-## ![Bb]in/
-
-# Removing actual Mother, you may or may not want this in your actual gitignore, but for the BOilerplate can't upload CMS to public 
-/CMS/*
-/Lib/*
-
 
 # Removing nuget build file
 
 #Include Packages folder since Rx-Core is no longer retreivable through nuget
-packages
