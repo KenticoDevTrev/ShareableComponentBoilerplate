@@ -1,12 +1,7 @@
 ﻿using Kentico.Forms.Web.Mvc;
 using Kentico.PageBuilder.Web.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ShareableComponentBoilerplate
+namespace CompanyName.ShareableComponentBoilerplate.Kentico.MVC
 {
     public class ShareableComponentBoilerplateWidgetModel : IWidgetProperties
     {
