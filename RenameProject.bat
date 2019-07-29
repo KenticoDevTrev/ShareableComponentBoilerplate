@@ -20,7 +20,6 @@ cd..
 powershell -Command "(gc ShareableComponentBoilerplate.Views.csproj) -replace 'CompanyName.ShareableComponentBoilerplate.Kentico.MVC', '%Prefix%%ToolName%%PostFix%' | Out-File -encoding ASCII ShareableComponentBoilerplate.Views.csproj"
 powershell -Command "(gc ShareableComponentBoilerplate.Views.csproj) -replace 'ShareableComponentBoilerplate', '%ToolName%' | Out-File -encoding ASCII ShareableComponentBoilerplate.Views.csproj"
 rename ShareableComponentBoilerplate.Views.csproj %ToolName%.Views.csproj
-rename ShareableComponentBoilerplate.Views.csproj.user %ToolName%.Views.csproj.user
 cd..
 
 rename ShareableComponentBoilerplate.Views %ToolName%.Views
@@ -46,7 +45,6 @@ powershell -Command "(gc ShareableComponentBoilerplate.nuspec) -replace '-TagsHe
 powershell -Command "(gc ShareableComponentBoilerplate.nuspec) -replace 'http://url', '%GitHubUrl%' | Out-File -encoding ASCII ShareableComponentBoilerplate.nuspec"
 rename ShareableComponentBoilerplate.nuspec %ToolName%.nuspec
 
-rename ShareableComponentBoilerplate.csproj.user %ToolName%.csproj.user
 cd..
 
 rename ShareableComponentBoilerplate %ToolName%
