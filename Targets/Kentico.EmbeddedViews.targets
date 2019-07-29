@@ -22,9 +22,5 @@
   	<!-- Very important, on build must point it to the bin of your main class library -->
     <Copy SourceFiles="$(IntermediateOutputPath)\Precompiled\bin\$(AssemblyName).dll" DestinationFolder="$(ProjectDir)\..\ShareableComponentBoilerplate\bin\" />
     <Copy SourceFiles="$(IntermediateOutputPath)\Precompiled\bin\$(AssemblyName).pdb" DestinationFolder="$(ProjectDir)\..\ShareableComponentBoilerplate\bin\" />
-	
-	<!-- The below is also only for testing, and copies the library to the bin of your solution.  Again this is only for testing, as when exported to a NuGet then these libraries will automatically be included -->
-	<Copy SourceFiles="$(IntermediateOutputPath)\Precompiled\bin\$(AssemblyName).dll" DestinationFolder="$(SolutionDir)\..\Boilerplate\Boilerplate\bin\" />
-    <Copy SourceFiles="$(IntermediateOutputPath)\Precompiled\bin\$(AssemblyName).pdb" DestinationFolder="$(SolutionDir)\..\Boilerplate\Boilerplate\bin\" />
   </Target>
 </Project>

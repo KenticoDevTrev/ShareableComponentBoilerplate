@@ -4,7 +4,7 @@
   <!-- Here you can specify other resources that should be copied to your Solution, this is primarily for testing as these files should be placed in the Content folder of your nuget package -->
   <!-- In our case, I'm copying a SampleIncludedFile.txt from my ShareableComponentBoilerplate to the Content\TextFiles folder on my BlankSite MVC solution -->
   <!--
-	<Copy SourceFiles="$(MSBuildProjectDirectory)\SampleResource\SampleIncludedFile.txt" DestinationFolder="$(SolutionDir)\BlankSite\Content\TextFiles" />
+	<Copy SourceFiles="$(MSBuildProjectDirectory)\SampleResource\SampleIncludedFile.txt" DestinationFolder="$(SolutionDir)\ToolsMVC\Content\TextFiles" />
   -->
   </Target>
 </Project>
