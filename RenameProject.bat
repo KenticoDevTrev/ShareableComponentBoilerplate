@@ -37,7 +37,7 @@ powershell -Command "(gc ShareableComponentBoilerplateWidgetModel.cs) -replace '
 powershell -Command "(gc ShareableComponentBoilerplateWidgetModel.cs) -replace 'ShareableComponentBoilerplate', '%ToolName%' | Out-File -encoding ASCII ShareableComponentBoilerplateWidgetModel.cs"
 rename ShareableComponentBoilerplateWidgetModel.cs %ToolName%WidgetModel.cs
 
-powershell -Command "(gc ShareableComponentBoilerplate.csproj) -replace 'CompanyName.ShareableComponentBoilerplate.Kentico.MVC', '%Prefix%%ToolName%%PostFix%' | Out-File -encoding ASCII ShareableComponentBoilerplate.csproj"
+powershell -Command "(gc ShareableComponentBoilerplate.csproj) -replace 'CompanyName.TShareableComponentBoilerplate.Kentico.MVC', '%Prefix%%ToolName%%PostFix%' | Out-File -encoding ASCII ShareableComponentBoilerplate.csproj"
 powershell -Command "(gc ShareableComponentBoilerplate.csproj) -replace 'ShareableComponentBoilerplate', '%ToolName%' | Out-File -encoding ASCII ShareableComponentBoilerplate.csproj"
 rename ShareableComponentBoilerplate.csproj %ToolName%.csproj
 
