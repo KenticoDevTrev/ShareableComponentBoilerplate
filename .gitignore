@@ -339,4 +339,6 @@ packages
 
 # Removing nuget build file
 *.bat
-BootstrapLayoutTool/App_Data/Global/Resources
+
+#Include Packages folder since Rx-Core is no longer retreivable through nuget
+!packages/*
