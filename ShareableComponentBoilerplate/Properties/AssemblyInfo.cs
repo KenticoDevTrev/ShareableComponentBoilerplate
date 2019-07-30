@@ -6,12 +6,12 @@ using CMS;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Shareable Component Boilerplate")]
-[assembly: AssemblyDescription("This is a boilerplate of creating Kentico Components that you can share on NuGet and the Kentico Marketplace")]
+[assembly: AssemblyTitle("AssemblyTitleHere")]
+[assembly: AssemblyDescription("AssemblyDescriptionHere")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Heartland Business Systems")]
-[assembly: AssemblyProduct("ShareableComponentBoilerplate")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
+[assembly: AssemblyCompany("CompanyHere")]
+[assembly: AssemblyProduct("ProductHere")]
+[assembly: AssemblyCopyright("AssemblyCopyrightHere")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyDiscoverable]
@@ -33,6 +33,5 @@ using CMS;
 //
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("12.29.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]

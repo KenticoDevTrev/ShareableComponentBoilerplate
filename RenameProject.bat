@@ -4,7 +4,13 @@ set /p Prefix="Enter Assembly Prefix (a-Z_.), usually Company (ex 'HBS.'):"
 set /p PostFix="Enter Assembly Postfix (a-Z_.) (ex '.Kentico.MVC'):"
 set /p GitHubUrl="Enter GitHub Url:"
 set /p Tags="Enter NuGet Tags (space separated):"
-
+set /p AssemblyTitle="Enter Assembly Title (no double quotes):"
+set /p AssemblyDescription="Enter Assembly Title (no double quotes):"
+set /p AssemblyCompany="Enter Assembly Description (no double quotes):"
+set /p AssemblyProduct="Enter Assembly Product Name (no double quotes):"
+set /p AssemblyCopyright="Enter Assembly Copyright (no double quotes):"
+/F %%a IN ('POWERSHELL -COMMAND "$([guid]::NewGuid().ToString())"') DO ( SET NEWGUIDA=%%a ))
+/F %%a IN ('POWERSHELL -COMMAND "$([guid]::NewGuid().ToString())"') DO ( SET NEWGUIDB=%%a ))
 
 cd ShareableComponentBoilerplate.Views
 cd Views
@@ -17,8 +23,18 @@ cd..
 cd..
 cd..
 
+cd Properties
+powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyTitleHere', '%AssemblyTitle%' | Out-File -encoding ASCII AssemblyInfo.cs"
+powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyDescriptionHere', '%AssemblyDescription%' | Out-File -encoding ASCII AssemblyInfo.cs"
+powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyCompanyHere', '%AssemblyCompany%' | Out-File -encoding ASCII AssemblyInfo.cs"
+powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyProductHere', '%AssemblyProduct%' | Out-File -encoding ASCII AssemblyInfo.cs"
+powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyCopyrightHere', '%AssemblyCopyright%' | Out-File -encoding ASCII AssemblyInfo.cs"
+powershell -Command "(gc AssemblyInfo.cs) -replace '3703e296-cd7c-47ff-9ab5-19b621c80b15', '%NEWGUIDA%' | Out-File -encoding ASCII AssemblyInfo.cs"
+cd..
+
 powershell -Command "(gc ShareableComponentBoilerplate.Views.csproj) -replace 'CompanyName.ShareableComponentBoilerplate.Kentico.MVC', '%Prefix%%ToolName%%PostFix%' | Out-File -encoding ASCII ShareableComponentBoilerplate.Views.csproj"
 powershell -Command "(gc ShareableComponentBoilerplate.Views.csproj) -replace 'ShareableComponentBoilerplate', '%ToolName%' | Out-File -encoding ASCII ShareableComponentBoilerplate.Views.csproj"
+
 rename ShareableComponentBoilerplate.Views.csproj %ToolName%.Views.csproj
 cd..
 
@@ -44,6 +60,15 @@ powershell -Command "(gc ShareableComponentBoilerplate.nuspec) -replace 'Company
 powershell -Command "(gc ShareableComponentBoilerplate.nuspec) -replace '-TagsHere-', '%Tags%' | Out-File -encoding ASCII ShareableComponentBoilerplate.nuspec"
 powershell -Command "(gc ShareableComponentBoilerplate.nuspec) -replace 'http://url', '%GitHubUrl%' | Out-File -encoding ASCII ShareableComponentBoilerplate.nuspec"
 rename ShareableComponentBoilerplate.nuspec %ToolName%.nuspec
+
+cd Properties
+powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyTitleHere', '%AssemblyTitle%' | Out-File -encoding ASCII AssemblyInfo.cs"
+powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyDescriptionHere', '%AssemblyDescription%' | Out-File -encoding ASCII AssemblyInfo.cs"
+powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyCompanyHere', '%AssemblyCompany%' | Out-File -encoding ASCII AssemblyInfo.cs"
+powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyProductHere', '%AssemblyProduct%' | Out-File -encoding ASCII AssemblyInfo.cs"
+powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyCopyrightHere', '%AssemblyCopyright%' | Out-File -encoding ASCII AssemblyInfo.cs"
+powershell -Command "(gc AssemblyInfo.cs) -replace '60d45549-bb62-4999-8f29-987b58b33127', '%NEWGUIDB%' | Out-File -encoding ASCII AssemblyInfo.cs"
+cd..
 
 cd..
 

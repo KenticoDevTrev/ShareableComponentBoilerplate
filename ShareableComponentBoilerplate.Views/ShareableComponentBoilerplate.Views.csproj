@@ -570,13 +570,13 @@
     <Analyzer Include="..\packages\AWSSDK.S3.3.1.9.0\analyzers\dotnet\cs\AWSSDK.S3.CodeAnalysis.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="obj\Debug\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\ShareableComponentBoilerplate\ShareableComponentBoilerplate.csproj">
       <Project>{60d45549-bb62-4999-8f29-987b58b33127}</Project>
       <Name>ShareableComponentBoilerplate</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="obj\Debug\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
