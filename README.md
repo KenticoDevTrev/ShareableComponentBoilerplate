@@ -25,6 +25,8 @@ Once you have your Kentico 12 SP instance set up:
 ## Create NuGet Package
 In the main component project, there is a `BuildPackage.bat` file.  Run this to create your nuget package.  You can then upload it to NuGet.org
 
+*NOTE: The BuildPackage.bat is set to build only in release mode.  Make sure your solution is set to Release and rebuilt in that mode*
+
 You may want or need to modify the following:
 
 ### Assembly
