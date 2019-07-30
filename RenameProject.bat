@@ -5,12 +5,12 @@ set /p PostFix="Enter Assembly Postfix (a-Z_.) (ex '.Kentico.MVC'):"
 set /p GitHubUrl="Enter GitHub Url:"
 set /p Tags="Enter NuGet Tags (space separated):"
 set /p AssemblyTitle="Enter Assembly Title (no double quotes):"
-set /p AssemblyDescription="Enter Assembly Title (no double quotes):"
-set /p AssemblyCompany="Enter Assembly Description (no double quotes):"
+set /p AssemblyDescription="Enter Assembly Description (no double quotes):"
+set /p AssemblyCompany="Enter Assembly Company (no double quotes):"
 set /p AssemblyProduct="Enter Assembly Product Name (no double quotes):"
 set /p AssemblyCopyright="Enter Assembly Copyright (no double quotes):"
-/F %%a IN ('POWERSHELL -COMMAND "$([guid]::NewGuid().ToString())"') DO ( SET NEWGUIDA=%%a ))
-/F %%a IN ('POWERSHELL -COMMAND "$([guid]::NewGuid().ToString())"') DO ( SET NEWGUIDB=%%a ))
+FOR /F %%a IN ('POWERSHELL -COMMAND "$([guid]::NewGuid().ToString())"') DO ( SET NEWGUIDA=%%a ))
+FOR /F %%a IN ('POWERSHELL -COMMAND "$([guid]::NewGuid().ToString())"') DO ( SET NEWGUIDB=%%a ))
 
 cd ShareableComponentBoilerplate.Views
 cd Views
