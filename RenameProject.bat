@@ -29,7 +29,7 @@ powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyDescriptionHere', '%
 powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyCompanyHere', '%AssemblyCompany%' | Out-File -encoding ASCII AssemblyInfo.cs"
 powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyProductHere', '%AssemblyProduct%' | Out-File -encoding ASCII AssemblyInfo.cs"
 powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyCopyrightHere', '%AssemblyCopyright%' | Out-File -encoding ASCII AssemblyInfo.cs"
-powershell -Command "(gc AssemblyInfo.cs) -replace '3703e296-cd7c-47ff-9ab5-19b621c80b15', '%NEWGUIDA%' | Out-File -encoding ASCII AssemblyInfo.cs"
+powershell -Command "(gc AssemblyInfo.cs) -replace '3703e296-cd7c-47ff-9ab5-19b621c80b15', [GUID]::NewGuid() | Out-File -encoding ASCII AssemblyInfo.cs"
 cd..
 
 powershell -Command "(gc ShareableComponentBoilerplate.Views.csproj) -replace 'CompanyName.ShareableComponentBoilerplate.Kentico.MVC', '%Prefix%%ToolName%%PostFix%' | Out-File -encoding ASCII ShareableComponentBoilerplate.Views.csproj"
@@ -67,7 +67,7 @@ powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyDescriptionHere', '%
 powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyCompanyHere', '%AssemblyCompany%' | Out-File -encoding ASCII AssemblyInfo.cs"
 powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyProductHere', '%AssemblyProduct%' | Out-File -encoding ASCII AssemblyInfo.cs"
 powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyCopyrightHere', '%AssemblyCopyright%' | Out-File -encoding ASCII AssemblyInfo.cs"
-powershell -Command "(gc AssemblyInfo.cs) -replace '60d45549-bb62-4999-8f29-987b58b33127', '%NEWGUIDB%' | Out-File -encoding ASCII AssemblyInfo.cs"
+powershell -Command "(gc AssemblyInfo.cs) -replace '60d45549-bb62-4999-8f29-987b58b33127', [GUID]::NewGuid() | Out-File -encoding ASCII AssemblyInfo.cs"
 cd..
 
 cd..
