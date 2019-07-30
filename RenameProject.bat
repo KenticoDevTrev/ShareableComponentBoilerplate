@@ -9,8 +9,6 @@ set /p AssemblyDescription="Enter Assembly Description (no double quotes):"
 set /p AssemblyCompany="Enter Assembly Company (no double quotes):"
 set /p AssemblyProduct="Enter Assembly Product Name (no double quotes):"
 set /p AssemblyCopyright="Enter Assembly Copyright (no double quotes):"
-FOR /F %%a IN ('POWERSHELL -COMMAND "$([guid]::NewGuid().ToString())"') DO ( SET NEWGUIDA=%%a ))
-FOR /F %%a IN ('POWERSHELL -COMMAND "$([guid]::NewGuid().ToString())"') DO ( SET NEWGUIDB=%%a ))
 
 cd ShareableComponentBoilerplate.Views
 cd Views
