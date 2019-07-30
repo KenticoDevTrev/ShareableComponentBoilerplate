@@ -1,5 +1,5 @@
 # ShareableComponentBoilerplate
-This boilerplate will get you started on creating a share-able Kentico MVC Component that you can publish to NuGet and to the marketplace.
+This boilerplate will get you started on creating a share-able Kentico MVC Component that you can publish to NuGet and to the marketplace.  Everything is preconfigured and thanks to the `RenameProject.bat` Setup only takes a couple minutes.
 
 # Instructions
 ## Clone and modify
