@@ -25,6 +25,7 @@ cd Properties
 powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyTitleHere', '%AssemblyTitle%' | Out-File -encoding ASCII AssemblyInfo.cs"
 powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyDescriptionHere', '%AssemblyDescription%' | Out-File -encoding ASCII AssemblyInfo.cs"
 powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyCompanyHere', '%AssemblyCompany%' | Out-File -encoding ASCII AssemblyInfo.cs"
+powershell -Command "(gc AssemblyInfo.cs) -replace 'http://www.github.com/YourAccount/YourProject', '%GitHubUrl%' | Out-File -encoding ASCII AssemblyInfo.cs"
 powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyProductHere', '%AssemblyProduct%' | Out-File -encoding ASCII AssemblyInfo.cs"
 powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyCopyrightHere', '%AssemblyCopyright%' | Out-File -encoding ASCII AssemblyInfo.cs"
 powershell -Command "(gc AssemblyInfo.cs) -replace '3703e296-cd7c-47ff-9ab5-19b621c80b15', [GUID]::NewGuid() | Out-File -encoding ASCII AssemblyInfo.cs"
