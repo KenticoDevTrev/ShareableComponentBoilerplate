@@ -25,7 +25,6 @@ cd Properties
 powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyTitleHere', '%AssemblyTitle%' | Out-File -encoding ASCII AssemblyInfo.cs"
 powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyDescriptionHere', '%AssemblyDescription%' | Out-File -encoding ASCII AssemblyInfo.cs"
 powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyCompanyHere', '%AssemblyCompany%' | Out-File -encoding ASCII AssemblyInfo.cs"
-powershell -Command "(gc AssemblyInfo.cs) -replace 'http://www.github.com/YourAccount/YourProject', '%GitHubUrl%' | Out-File -encoding ASCII AssemblyInfo.cs"
 powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyProductHere', '%AssemblyProduct%' | Out-File -encoding ASCII AssemblyInfo.cs"
 powershell -Command "(gc AssemblyInfo.cs) -replace 'AssemblyCopyrightHere', '%AssemblyCopyright%' | Out-File -encoding ASCII AssemblyInfo.cs"
 powershell -Command "(gc AssemblyInfo.cs) -replace '3703e296-cd7c-47ff-9ab5-19b621c80b15', [GUID]::NewGuid() | Out-File -encoding ASCII AssemblyInfo.cs"
@@ -59,6 +58,7 @@ rename ShareableComponentBoilerplate.csproj %ToolName%.csproj
 powershell -Command "(gc ShareableComponentBoilerplate.nuspec) -replace 'CompanyName.ShareableComponentBoilerplate', '%Prefix%%ToolName%' | Out-File -encoding ASCII ShareableComponentBoilerplate.nuspec"
 powershell -Command "(gc ShareableComponentBoilerplate.nuspec) -replace '-TagsHere-', '%Tags%' | Out-File -encoding ASCII ShareableComponentBoilerplate.nuspec"
 powershell -Command "(gc ShareableComponentBoilerplate.nuspec) -replace 'http://url', '%GitHubUrl%' | Out-File -encoding ASCII ShareableComponentBoilerplate.nuspec"
+powershell -Command "(gc ShareableComponentBoilerplate.nuspec) -replace '--Copyright--, '%AssemblyCopyright%' | Out-File -encoding ASCII ShareableComponentBoilerplate.nuspec"
 rename ShareableComponentBoilerplate.nuspec %ToolName%.nuspec
 
 cd Properties
