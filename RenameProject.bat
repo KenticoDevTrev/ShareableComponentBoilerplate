@@ -58,7 +58,7 @@ rename ShareableComponentBoilerplate.csproj %ToolName%.csproj
 powershell -Command "(gc ShareableComponentBoilerplate.nuspec) -replace 'CompanyName.ShareableComponentBoilerplate', '%Prefix%%ToolName%' | Out-File -encoding ASCII ShareableComponentBoilerplate.nuspec"
 powershell -Command "(gc ShareableComponentBoilerplate.nuspec) -replace '-TagsHere-', '%Tags%' | Out-File -encoding ASCII ShareableComponentBoilerplate.nuspec"
 powershell -Command "(gc ShareableComponentBoilerplate.nuspec) -replace 'http://url', '%GitHubUrl%' | Out-File -encoding ASCII ShareableComponentBoilerplate.nuspec"
-powershell -Command "(gc ShareableComponentBoilerplate.nuspec) -replace '--Copyright--, '%AssemblyCopyright%' | Out-File -encoding ASCII ShareableComponentBoilerplate.nuspec"
+powershell -Command "(gc ShareableComponentBoilerplate.nuspec) -replace '--CopyrightHere--', '%AssemblyCopyright%' | Out-File -encoding ASCII ShareableComponentBoilerplate.nuspec"
 rename ShareableComponentBoilerplate.nuspec %ToolName%.nuspec
 
 cd Properties
