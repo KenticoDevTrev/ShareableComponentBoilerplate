@@ -1,6 +1,6 @@
 @echo off
 echo --INSTRUCTIONS--
-echo NO DOUBLE QUOTES ALLOWED.  Powershell special characters such as @ ' $ # must be escaped with `
+echo Do not use any of these characters: " ' @ $ # `, if you wish to use any of these you must do so manually after this script is done.
 set /p ToolName="Enter ToolName (a-Z_): "
 set /p Prefix="Enter Assembly Prefix (a-Z_.), usually Company (ex 'HBS.'): "
 set /p PostFix="Enter Assembly Postfix (a-Z_.) (ex '.Kentico.MVC'): "
@@ -58,7 +58,7 @@ powershell -Command "(gc ShareableComponentBoilerplate.csproj) -replace 'Shareab
 rename ShareableComponentBoilerplate.csproj %ToolName%.csproj
 
 powershell -Command "(gc ShareableComponentBoilerplate.nuspec) -replace 'CompanyName.ShareableComponentBoilerplate', '%Prefix%%ToolName%' | Out-File -encoding ASCII ShareableComponentBoilerplate.nuspec"
-powershell -Command "(gc ShareableComponentBoilerplate.nuspec) -replace '-TagsHere-', '%Tags%' | Out-File -encoding ASCII ShareableComponentBoilerplate.nuspec"
+powershell -Command "(gc ShareableComponentBoilerplate.nuspec) -replace '--TagsHere--', '%Tags%' | Out-File -encoding ASCII ShareableComponentBoilerplate.nuspec"
 powershell -Command "(gc ShareableComponentBoilerplate.nuspec) -replace 'http://url', '%GitHubUrl%' | Out-File -encoding ASCII ShareableComponentBoilerplate.nuspec"
 powershell -Command "(gc ShareableComponentBoilerplate.nuspec) -replace '--CopyrightHere--', '%AssemblyCopyright%' | Out-File -encoding ASCII ShareableComponentBoilerplate.nuspec"
 rename ShareableComponentBoilerplate.nuspec %ToolName%.nuspec
