@@ -1,14 +1,16 @@
 @echo off
-set /p ToolName="Enter ToolName (a-Z_):"
-set /p Prefix="Enter Assembly Prefix (a-Z_.), usually Company (ex 'HBS.'):"
-set /p PostFix="Enter Assembly Postfix (a-Z_.) (ex '.Kentico.MVC'):"
-set /p GitHubUrl="Enter GitHub Url:"
-set /p Tags="Enter NuGet Tags (space separated):"
-set /p AssemblyTitle="Enter Assembly Title (no double quotes):"
-set /p AssemblyDescription="Enter Assembly Description (no double quotes):"
-set /p AssemblyCompany="Enter Assembly Company (no double quotes):"
-set /p AssemblyProduct="Enter Assembly Product Name (no double quotes):"
-set /p AssemblyCopyright="Enter Assembly Copyright (no double quotes):"
+echo --INSTRUCTIONS--
+echo NO DOUBLE QUOTES ALLOWED.  Powershell special characters such as @ ' $ # must be escaped with `
+set /p ToolName="Enter ToolName (a-Z_): "
+set /p Prefix="Enter Assembly Prefix (a-Z_.), usually Company (ex 'HBS.'): "
+set /p PostFix="Enter Assembly Postfix (a-Z_.) (ex '.Kentico.MVC'): "
+set /p GitHubUrl="Enter GitHub Url: "
+set /p Tags="Enter NuGet Tags (space separated): "
+set /p AssemblyTitle="Enter Assembly Title: "
+set /p AssemblyDescription="Enter Assembly Description: "
+set /p AssemblyCompany="Enter Assembly Company: "
+set /p AssemblyProduct="Enter Assembly Product Name: "
+set /p AssemblyCopyright="Enter Assembly Copyright: "
 
 cd ShareableComponentBoilerplate.Views
 cd Views
@@ -80,3 +82,4 @@ rename ShareableComponentBoilerplate.sln %ToolName%.sln
 cd targets
 powershell -Command "(gc Kentico.EmbeddedViews.targets) -replace 'ShareableComponentBoilerplate', '%ToolName%' | Out-File -encoding ASCII Kentico.EmbeddedViews.targets"
 cd..
+set /p DUMMY="Press ENTER To exit.  If errors occurred, redo repository and check your input for invalid characters."
