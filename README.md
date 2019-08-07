@@ -20,6 +20,7 @@ Once you have your Kentico 12 SP instance set up:
 1. Open your Kentico MVC Web App's solution
 1. On the solution, right click and add Existing project, and select your Component Projects (View project is optional)
 1. On your MVC Web App, right click on references and add a reference to your Component project (not the View, just the code).
+1. On your MVC Web App, right click on references and add a reference to the View.dll that's in the bin folder of your Component project (not the view project).
 1. Build your Component project, and the MVC Web Application Project
 
 ## Create NuGet Package
