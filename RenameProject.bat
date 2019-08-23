@@ -82,4 +82,4 @@ rename ShareableComponentBoilerplate.sln %ToolName%.sln
 cd targets
 powershell -Command "(gc Kentico.EmbeddedViews.targets) -replace 'ShareableComponentBoilerplate', '%ToolName%' | Out-File -encoding ASCII Kentico.EmbeddedViews.targets"
 cd..
-set /p DUMMY="Press ENTER To exit.  If errors occurred, redo repository and check your input for invalid characters."
+pause

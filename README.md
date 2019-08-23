@@ -37,9 +37,44 @@ When publishing new versions, you will want to open up your Solution, right clic
 Modify the XXXX.nuspec file to add things such as Tags, Icons, release notes (you should update your release notes with what the update contains or the bug fixes perhaps).  You may also need to add additional <file> elements to include items beyond the Compiled Views library.  Please see [Microsoft Nuspec Documentation](https://docs.microsoft.com/en-us/nuget/reference/nuspec]) for more info.
   
 ## Submission to Kentico Marketplace
-Once you have your Repository updated and the NuGet package uploaded, you can perform a pull request to the Kentico Marketplace to include your tool on the listing.
+1. Update the License.txt with your copyright information
+1. Update the Readme file, you can use the area below this as your starter for it.  It must contain...
+   * clear description of the project
+   * download & installation instructions
+   * (a link to) contribution guidelines
+   * (a link to) license information
+   * compatibility information
+   * information about how the project is supported in case users have questions or find a bug
+   * (optional, but recommended) a screenshot/gif of the extension
+1. Update your github repository
+1. Upload your NuGet package
+1. Perform a pull request to the Kentico Marketplace to include your tool on the listing.
 
 ## Targets Modification
 There are 2 .Targets files, these can be modified to (on build) copy files to differnet projects.  This is needed for the Compiled Views (which is already pre-configured for you), but you can also modify it to move other files over from your library to your development MVC web app project.  Examples are given in the commented area.
 
 Please remember, anything that needs to be exported with the nuget package needs to be handled in the nuspec file by copying the file into the Content location of the nuget package.
+
+---
+# Sample ReadMe
+---
+
+# [ToolNameHere]
+[ToolNameHere] for Kentico MVC, [SomeDescriptionHere]
+
+# Installation
+1. Install the `[ToolPackageID]` NuGet Package to your MVC Site
+1. Additional instructions...
+
+# Usage
+1. How you use the tool, maybe a gif image
+
+# Contributions, but fixes and License
+Feel free to Fork and submit pull requests to contribute.
+
+You can submit bugs through the issue list and i will get to them as soon as i can, unless you want to fix it yourself and submit a pull request!
+
+Check the License.txt for License information
+
+# Compatability
+Can be used on any Kentico 12 SP site (hotfix 29 or above).
