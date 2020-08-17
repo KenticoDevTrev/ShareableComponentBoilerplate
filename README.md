@@ -3,7 +3,7 @@ This boilerplate will get you started on creating a share-able Kentico MVC Compo
 
 # Instructions
 ## Clone and modify
-1. Use this Template to create your own repostiory.
+1. Use this Template to create your own repository.
 1. Download your repository onto your computer (I highly recommend making a separate `Kentico Repositories` folder that is not connected to your Kentico Admin nor Kentico MVC instance)
 1. Once downloaded, run the `RenameProject.bat` and enter in your project information
 1. Open the Solution file, right click on your solution and Clean Solution
@@ -51,7 +51,7 @@ Modify the XXXX.nuspec file to add things such as Tags, Icons, release notes (yo
 1. Perform a pull request to the Kentico Marketplace to include your tool on the listing.
 
 ## Targets Modification
-There are 2 .Targets files, these can be modified to (on build) copy files to differnet projects.  This is needed for the Compiled Views (which is already pre-configured for you), but you can also modify it to move other files over from your library to your development MVC web app project.  Examples are given in the commented area.
+There are 2 .Targets files, these can be modified to (on build) copy files to different projects.  This is needed for the Compiled Views (which is already pre-configured for you), but you can also modify it to move other files over from your library to your development MVC web app project.  Examples are given in the commented area.
 
 Please remember, anything that needs to be exported with the nuget package needs to be handled in the nuspec file by copying the file into the Content location of the nuget package.
 
@@ -76,5 +76,5 @@ You can submit bugs through the issue list and i will get to them as soon as i c
 
 Check the License.txt for License information
 
-# Compatability
+# Compatibility
 Can be used on any Kentico 12 SP site (hotfix 29 or above).
