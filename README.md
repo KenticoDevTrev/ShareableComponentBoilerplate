@@ -69,7 +69,7 @@ Please remember, anything that needs to be exported with the nuget package needs
 # Usage
 1. How you use the tool, maybe a gif image
 
-# Contributions, but fixes and License
+# Contributions, bug fixes and License
 Feel free to Fork and submit pull requests to contribute.
 
 You can submit bugs through the issue list and i will get to them as soon as i can, unless you want to fix it yourself and submit a pull request!
